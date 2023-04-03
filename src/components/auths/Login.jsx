@@ -1,6 +1,56 @@
 import React from 'react'
+import { useState } from 'react'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-const Login = ({controller2,setController2,status,login}) => {
+const Login = ({setStatus,status,isNotEmpty,showPassword,setShowPassword}) => {
+  const navigate = useNavigate()  
+
+  const [controller2,setController2] = useState({
+    email:"",
+    password:""
+  })
+
+   async function login(e){
+    e.preventDefault()
+    let req
+    if(isNotEmpty(controller2.email) && isNotEmpty(controller2.password)){
+      try{
+        setStatus('Loading')
+        req = await axios.post('/authenticate/login',{email:controller2.email,password:controller2.password})
+        localStorage.setItem('token',req.data.token)
+        setStatus(req.data.msg)
+      }catch(error){
+        setStatus('Something went wrong...')
+        console.log(error)
+      }
+    }
+    else
+    {
+      setStatus("Please fill in all the fields !")
+    }
+
+    setTimeout(() => {
+      clearing();
+    }, 2000);
+    
+    if(req.data.ok===true){
+      setTimeout(() => {
+        navigate('/')
+      }, 2300);
+    }
+  }
+ 
+
+  function clearing(){
+    setStatus("")
+    setController2({
+      email:"",
+      password:""
+    })
+  }
+
   return (
 
     <div className="auth flex justify-center items-center min-h-[100vh] max-h-[100vh] bg-gray50 font-Karla">
@@ -14,9 +64,9 @@ const Login = ({controller2,setController2,status,login}) => {
                 <span className="font-semibold text-purple15">.</span>
               </p>
             </div>
-            <p className="text-textGray text-sm font-medium tracking-tighter ml-auto mr-auto">
+            <Link to={'/'} className="text-textGray text-sm font-medium tracking-tighter ml-auto mr-auto">
               Home
-            </p>
+            </Link>
           </nav>
             <p className="mt-2 mb-2 text-3xl font-bold">
                 Log in to your account <span className="text-purple15">.</span>
@@ -75,8 +125,11 @@ const Login = ({controller2,setController2,status,login}) => {
                       value={controller2.password}
                     />
                   </div>
-                  <i className="bi bi-eye-fill text-textGray text-lg"></i>
-                </div>
+                  {
+                    showPassword ? <i onClick={()=>setShowPassword(prevState=>!prevState)} className="bi bi-eye-fill text-textGray text-lg"></i>
+                    :
+                    <i onClick={()=>setShowPassword(prevState=>!prevState)} className="bi bi-eye-slash-fill text-textGray text-lg"></i>
+                  }                </div>
               </div>
 
               <button

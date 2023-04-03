@@ -1,7 +1,71 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Registering = ({ register, controller, setController, status }) => {
+const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }) => {
+    const navigate = useNavigate()  
+
+    const [controller, setController] = useState({
+    username: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  
+  async function register(e) {
+    e.preventDefault();
+    let req
+    if (
+      isNotEmpty(controller.username) &&
+      isNotEmpty(controller.firstName) &&
+      isNotEmpty(controller.lastName) &&
+      isNotEmpty(controller.email) &&
+      isNotEmpty(controller.password)
+    ) {
+      try {
+        setStatus("Loading...");
+          req = await axios.post("/authenticate/register", {
+          username: controller.username,
+          firstName: controller.firstName,
+          lastName: controller.lastName,
+          email: controller.email,
+          password: controller.password,
+        });
+        console.log(req)
+        setStatus(req.data.msg);
+      } catch (error) {
+        setStatus("Something went wrong...");
+        console.log(error);
+      }
+    } else {
+      setStatus("Please fill in all the fields !");
+    }
+
+    setTimeout(() => {
+      clearing();
+    }, 2000);
+    
+    if(req.data.ok===true){
+      setTimeout(() => {
+        navigate('/login')
+      }, 2300);
+    }
+  }
+
+   function clearing() {
+    setController({
+      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    });
+    setStatus("");
+  }
+
   return (
     <div className="auth flex justify-center items-center min-h-[100vh] max-h-[100vh] bg-gray50 font-Karla">
       <div className="flex">
@@ -14,9 +78,9 @@ const Registering = ({ register, controller, setController, status }) => {
                 <span className="font-semibold text-purple15">.</span>
               </p>
             </div>
-            <p className="text-textGray text-sm font-medium tracking-tighter ml-auto mr-auto">
+            <Link to={'/'} className="text-textGray text-sm font-medium tracking-tighter ml-auto mr-auto">
               Home
-            </p>
+            </Link>
           </nav>
           <div className="flex flex-col gap-7">
             <div className="section-1">
@@ -128,7 +192,7 @@ const Registering = ({ register, controller, setController, status }) => {
                     <input
                       id="email"
                       className="outline-none bg-inherit font-bold w-[100%]"
-                      type="email"
+                      type='email'
                       onChange={(e) =>
                         setController((prevState) => {
                           return {
@@ -156,7 +220,7 @@ const Registering = ({ register, controller, setController, status }) => {
                     <input
                       id="password"
                       className="outline-none bg-inherit font-bold w-[100%]"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       onChange={(e) =>
                         setController((prevState) => {
                           return {
@@ -168,7 +232,11 @@ const Registering = ({ register, controller, setController, status }) => {
                       value={controller.password}
                     />
                   </div>
-                  <i className="bi bi-eye-fill text-textGray text-lg"></i>
+                  {
+                    showPassword ? <i onClick={()=>setShowPassword(prevState=>!prevState)} className="bi bi-eye-fill text-textGray text-lg"></i>
+                    :
+                    <i onClick={()=>setShowPassword(prevState=>!prevState)} className="bi bi-eye-slash-fill text-textGray text-lg"></i>
+                  }
                 </div>
               </div>
 
