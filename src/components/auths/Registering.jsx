@@ -126,7 +126,16 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
                   <span className="text-red-700">*</span>
                   <p>Username will be visible online</p>
                 </div>
+                <div className="photo flex justify-evenly items-center mt-4 mb-[1px]">
+                  <input id="photo" className="outline-none text-xs border-b border-b-textGray placeholder-pink5" placeholder="image URL"/>
+                  <label htmlFor="photo" className="text-xs">Choose your profile image</label>
+                </div>
+                <div className="alert flex items-center gap-1 text-xs ml-3">
+                  <span className="text-red-700">*</span>
+                  <p>This field it's not required</p>
+                </div>
               </div>
+              
               <div className="names flex gap-4">
                 <div className="firstName flex gap-3 items-center bg-gray50 px-3 py-1 rounded-xl">
                   <div className="flex flex-col">
