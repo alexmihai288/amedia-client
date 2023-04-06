@@ -68,8 +68,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
 
   return (
     <div className="auth flex justify-center items-center min-h-[100vh] max-h-[100vh] bg-gray50 font-Karla">
-      <div className="flex">
-        <div className="side-1 p-7 flex flex-col gap-20 bg-preWhite rounded-xl">
+        <div className="side-1 p-7 flex flex-col gap-10 sm:gap-15 md:gap-20 bg-preWhite rounded-xl">
           <nav className="flex items-center">
             <div className="logo&name flex gap-2 items-center">
               <i className="bi bi-circle-fill text-2xl text-pink5"></i>
@@ -95,7 +94,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
                 <Link to={'/login'} className="ml-1 text-pink5"> Log In</Link>
               </p>
             </div>
-            <form className="section-2 flex flex-col gap-2">
+            <form className="section-2 flex flex-col gap-4 md:gap-3 max-w-sm">
               <div className="username w-[100%] mb-4">
                 <div className="flex gap-3 items-center bg-gray50 px-3 py-1 rounded-xl justify-between w-[100%]">
                   <div className="flex flex-col w-[100%]">
@@ -126,9 +125,9 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
                   <span className="text-red-700">*</span>
                   <p>Username will be visible online</p>
                 </div>
-                <div className="photo flex justify-evenly items-center mt-4 mb-[1px]">
+                <div className="photo sm:flex sm:justify-between sm:items-center mt-4 ml-3 mb-[2px]">
                   <input id="photo" className="outline-none text-xs border-b border-b-textGray placeholder-pink5" placeholder="image URL"/>
-                  <label htmlFor="photo" className="text-xs">Choose your profile image</label>
+                  <label htmlFor="photo" className="text-xs hidden sm:block">Choose your profile image</label>
                 </div>
                 <div className="alert flex items-center gap-1 text-xs ml-3">
                   <span className="text-red-700">*</span>
@@ -136,8 +135,8 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
                 </div>
               </div>
               
-              <div className="names flex gap-4">
-                <div className="firstName flex gap-3 items-center bg-gray50 px-3 py-1 rounded-xl">
+              <div className="names flex flex-col gap-2 md:flex-row md:gap-4">
+                <div className="firstName flex gap-3 items-center bg-gray50 px-3 py-1 rounded-xl w-fit">
                   <div className="flex flex-col">
                     <label
                       htmlFor="firstName"
@@ -147,7 +146,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
                     </label>
                     <input
                       id="firstName"
-                      className="outline-none bg-inherit font-bold w-32"
+                      className="outline-none bg-inherit font-bold w-[50%]"
                       type="text"
                       onChange={(e) =>
                         setController((prevState) => {
@@ -162,7 +161,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
                   </div>
                   <i className="bi bi-person-vcard text-[#818b90] text-lg"></i>
                 </div>
-                <div className="lastName flex gap-3 items-center bg-gray50 px-3 py-1 rounded-xl">
+                <div className="lastName flex gap-3 items-center bg-gray50 px-3 py-1 rounded-xl w-fit">
                   <div className="flex flex-col">
                     <label
                       htmlFor="lastName"
@@ -172,7 +171,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
                     </label>
                     <input
                       id="lastName"
-                      className="outline-none bg-inherit font-bold w-32"
+                      className="outline-none bg-inherit font-bold w-[50%]"
                       type="text"
                       onChange={(e) =>
                         setController((prevState) => {
@@ -251,7 +250,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
 
               <button
                 type="submit"
-                className="mt-7 bg-purple15 px-9 py-3 self-center rounded-3xl font-bold tracking-tighter text-preWhite hover:scale-105 					active:scale-95 duration-75"
+                className="mt-4 sm:mt-7 bg-purple15 px-9 py-3 self-center rounded-3xl font-bold tracking-tighter text-preWhite hover:scale-105 active:scale-95 duration-75"
                 onClick={register}
               >
                 Create account
@@ -261,7 +260,6 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
             </form>
           </div>
         </div>
-      </div>
     </div>
   );
 };
