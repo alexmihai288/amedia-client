@@ -34,7 +34,6 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
           email: controller.email,
           password: controller.password,
         });
-        console.log(req)
         setStatus(req.data.msg);
       } catch (error) {
         setStatus("Something went wrong...");
