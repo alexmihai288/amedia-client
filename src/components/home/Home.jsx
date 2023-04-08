@@ -11,7 +11,9 @@ const Home = ({user,logged}) => {
   async function getAllPosts() {
     try {
       const req = await axios.get('/posts');
-      setPosts(req.data.post);
+      if(req.data.post){
+       setPosts(req.data.post);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -24,18 +26,21 @@ const Home = ({user,logged}) => {
 
   return (
     <div className='font-Karla bg-gray50 min-h-[100vh] flex flex-col'>
-      <Navbar/>
+      <Navbar logged={logged}/>
       <div className='flex gap-1'>
         <div className='leftSide hidden sm:block min-w-fit h-[calc(100vh-80px)]'>
           <LeftSide />
         </div>
         <div className='overflow-y-scroll max-h-[calc(100vh-80px)] w-[100%] grid grid-cols-3 gap-14 p-14'>
           {
-            posts?.map(post=>(
-              <div key={post._id} className='p-2 bg-white rounded-md'>
+            posts ?
+            posts.map(post=>(
+              <div key={post._id} className='p-2 bg-white rounded-md h-fit'>
                 <Post {...post} user={user}/>
               </div>
             ))
+            :
+            'loading...'
           }
         </div>
       </div>

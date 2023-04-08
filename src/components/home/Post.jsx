@@ -28,11 +28,11 @@ const Post = ({description,imageUrl,createdBy,user}) => {
         <div className='postImage relative'>
           <img src={imageUrl} alt='postImage' className='w-full'/>
           <div className='absolute -top-5 -left-5'>
-            <img src={profileImage} alt='profileImage' className='w-8 rounded-full'/>
+            <img src={profileImage? profileImage : 'loading'} alt='profileImage' className='w-8 rounded-full'/>
           </div>
         </div>
         <p className='text-sm ml-5'>{description}</p>
-        <p>{username}</p>
+        <p>{username? username :'loading'}</p>
         <div className='flex items-center justify-center gap-8 text-lg px-4 mt-5'>
         {user._id===createdBy && <button className='bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter'>Edit</button>}
           <div className='votes ml-auto flex items-center gap-8'>

@@ -1,11 +1,9 @@
 import React from 'react'
 import { useState,useRef,useEffect } from 'react'
 import LeftSide from './LeftSide'
+import { Link } from 'react-router-dom'
 
-const Navbar = () => {
-
-
-  
+const Navbar = ({logged}) => {
 
   //showing or not showing the left side
   const [showLeftSide,setShowLeftSide] = useState(false)
@@ -44,17 +42,29 @@ const Navbar = () => {
                   </p>
                 </div>
             </div>
+          
+            {logged===true?
+            
             <div className='hidden features md:flex md:items-center md:gap-5 ml-5'>
-                <div className='hidden md:block'>
-                    <i className="bi bi-people-fill text-white text-lg"></i>
-                </div>
-                <div className='profile hover:scale-105 active:scale-95 relative'>
-                    <img src='https://media.discordapp.net/attachments/724220064223592541/1092840802721480804/user.jpg?width=662&height=662' alt='profileImage' className="object-cover rounded-full w-8 h-8 z-20"/>
-                    <div className='absolute -bottom-3 -right-2'>
-                        <i className="bi bi-caret-down-fill text-pink5"></i>
-                    </div>
+            <div className='hidden md:block'>
+                <i className="bi bi-people-fill text-white text-lg"></i>
+            </div>
+            <div className='profile hover:scale-105 active:scale-95 relative'>
+                <img src='https://media.discordapp.net/attachments/724220064223592541/1092840802721480804/user.jpg?width=662&height=662' alt='profileImage' className="object-cover rounded-full w-8 h-8 z-20"/>
+                <div className='absolute -bottom-3 -right-2'>
+                    <i className="bi bi-caret-down-fill text-pink5"></i>
                 </div>
             </div>
+            </div>
+            :
+            <div className='buttons flex items-center gap-2'>
+                <Link to={'/register'} className='bg-pink5 px-3 py-1 rounded-lg text-white'>Register</Link>
+                <Link to={'/login'} className='bg-white px-3 py-1 rounded-lg text-pink5'>Login</Link>
+            </div>
+
+            }
+              
+             
         </div>
     </div>
     

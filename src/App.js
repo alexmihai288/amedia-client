@@ -26,22 +26,24 @@ function App() {
 
   useEffect(()=>{
     decodeUserToken();
-    console.log('re');
   },[])
 
   async function decodeUserToken(){
     try{
       const req = await axios.post('/search/decodeUser',{},{
         headers:{
-          Authorization:`Bearer ${token}`
+          authorization:`Bearer ${token}`
         }
       })
-      console.log(req);
-      setUser(req.data);
+      if(req.data.ok===true){
+        setUser(req.data.targetUser);
+        setLogged(true)
+      }
     }catch(err){
       console.log(err);
     }
   }
+
 
 
 
