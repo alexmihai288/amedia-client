@@ -37,7 +37,8 @@ const Login = ({setStatus,status,isNotEmpty,showPassword,setShowPassword}) => {
     
     if(req.data.ok===true){
       setTimeout(() => {
-        navigate('/')
+        navigate('/');
+        window.location.reload();
       }, 2300);
     }
   }
