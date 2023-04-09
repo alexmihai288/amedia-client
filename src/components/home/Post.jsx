@@ -33,9 +33,9 @@ const Post = ({description,imageUrl,createdBy,user}) => {
         </div>
         <p className='text-sm ml-5'>{description}</p>
         <p>{username? username :'loading'}</p>
-        <div className='flex items-center justify-center gap-8 text-lg px-4 mt-5'>
-        {user._id===createdBy && <button className='bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter'>Edit</button>}
-          <div className='votes ml-auto flex items-center gap-8'>
+        <div className='flex items-center justify-center text-lg px-4 mt-5'>
+        {user._id===createdBy && <button className='bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto'>Edit</button>}
+          <div className='votes flex items-center gap-8 ml-auto mr-auto'>
             <i className="bi bi-caret-up"></i>
             <i className="bi bi-caret-down"></i>
           </div>

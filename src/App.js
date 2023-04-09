@@ -19,7 +19,7 @@ function App() {
   const [showPassword,setShowPassword] = useState(false);
 
 
-  const [token,setToken] = useState(function(){return localStorage.getItem('token') || undefined});
+  const [token,setToken] = useState(function(){return localStorage.getItem('token') || ''});
   const [user,setUser] = useState({});
   const [logged,setLogged] = useState(false);
 
@@ -44,7 +44,7 @@ function App() {
     }
   }
 
-
+console.log(logged)
 
 
   return (

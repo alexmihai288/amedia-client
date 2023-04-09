@@ -2,33 +2,41 @@ import React from 'react'
 import { useState,useRef,useEffect } from 'react'
 import LeftSide from './LeftSide'
 import { Link } from 'react-router-dom'
+import DropDown from './DropDown'
 
-const Navbar = ({logged}) => {
+const Navbar = ({user,logged}) => {
 
-  //showing or not showing the left side
-  const [showLeftSide,setShowLeftSide] = useState(false)
-  function LeftSideFunction(){
-      setShowLeftSide(true)
-  }
-  const LeftDiv = useRef(null)
-  const handleClickOutside = (event) => {
-    if (LeftDiv.current && !LeftDiv.current.contains(event.target)) {
-      setShowLeftSide(false)
+  //showing or not showing the left side/dropdown
+    const [showLeftSide,setShowLeftSide] = useState(false)
+    const [showDropDown,setDropDown] = useState(false)
+    function SideFunction(){
+        setShowLeftSide(true)
+        setDropDown(true)
     }
-  }
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+    const LeftDiv = useRef(null)
+    const dropDown = useRef(null)
+    const handleClickOutside = (event) => {
+      if (LeftDiv.current && !LeftDiv.current.contains(event.target)) {
+        setShowLeftSide(false)
+      }
+      if(dropDown.current && !dropDown.current.contains(event.target)){
+        setDropDown(false)
+      }
     }
-  }, [])
+    useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+      }
+    }, [])
+  //end here
 
   return (
     <div className='bg-purple15'>
         <div className='px-5 py-3 sm:px-7 sm:py-5 flex items-center justify-between max-w-[1600px] ml-auto mr-auto'>
-            <i className='mr-2 bi bi-list text-pink5 text-3xl sm:hidden' onClick={LeftSideFunction}></i>
+            <i className='mr-2 bi bi-list text-pink5 text-3xl sm:hidden' onClick={SideFunction}></i>
             { showLeftSide &&
-                <div className='absolute left-0 top-0 bottom-0 sm:hidden bg-gray50 border-r-2 border-textGray' ref={LeftDiv}>
+                <div className='z-30 absolute left-0 top-0 bottom-0 sm:hidden bg-gray50 border-r-2 border-textGray' ref={LeftDiv}>
                     <LeftSide/>
                 </div>
             }
@@ -45,16 +53,22 @@ const Navbar = ({logged}) => {
           
             {logged===true?
             
-            <div className='hidden features md:flex md:items-center md:gap-5 ml-5'>
-            <div className='hidden md:block'>
-                <i className="bi bi-people-fill text-white text-lg"></i>
-            </div>
-            <div className='profile hover:scale-105 active:scale-95 relative'>
-                <img src='https://media.discordapp.net/attachments/724220064223592541/1092840802721480804/user.jpg?width=662&height=662' alt='profileImage' className="object-cover rounded-full w-8 h-8 z-20"/>
-                <div className='absolute -bottom-3 -right-2'>
-                    <i className="bi bi-caret-down-fill text-pink5"></i>
+            <div className='hidden features md:flex md:items-center md:gap-5 ml-5 relative'>
+              <div className='hidden md:block'>
+                  <i className="bi bi-people-fill text-white text-lg"></i>
+              </div>
+              <div className='profile hover:scale-105 active:scale-95 relative' onClick={SideFunction}>
+                  <img src='https://media.discordapp.net/attachments/724220064223592541/1092840802721480804/user.jpg?width=662&height=662' alt='profileImage' className="object-cover rounded-full w-8 h-8 z-20"/>
+                  <div className='absolute -bottom-3 -right-2'>
+                      <i className="bi bi-caret-down-fill text-pink5"></i>
+                  </div>
+              </div>
+              {showDropDown && 
+                <div className='dropDown absolute -bottom-16 right-0.5 z-30' ref={dropDown}>
+                  <DropDown user={user}/>
                 </div>
-            </div>
+              }
+              
             </div>
             :
             <div className='buttons flex items-center gap-2'>
