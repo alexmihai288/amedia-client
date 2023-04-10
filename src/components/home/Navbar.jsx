@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import DropDown from './DropDown'
 import axios from 'axios'
 import Rocket from '../../images/rocket.png'
-import DropDownNav from './DropDownNav'
+import DropDownNav from '../home/DropDownNav'
 
 const Navbar = ({user,logged,token}) => {
 
@@ -36,8 +36,7 @@ const Navbar = ({user,logged,token}) => {
 
     const [searchInput,setSearchInput] = useState("");
     const [users,setUsers] = useState([])
-    const [message,setMessage] = useState('');    
-
+    const [message,setMessage] = useState('');   
 
     async function searchUsers(){
       try {
@@ -48,7 +47,7 @@ const Navbar = ({user,logged,token}) => {
             }
           })
           console.log(req)
-
+          
           if(req.data.ok===false)
             setMessage(req.data.msg)
 
@@ -78,8 +77,8 @@ const Navbar = ({user,logged,token}) => {
                 </div>
             }
             <div className='search&logo w-[100%] sm:w-[] flex items-center gap-4 lg:flex-row-reverse lg:w-[100%] '>
-                <div className='input&search lg:mr-auto lg:ml-auto lg:w-[40%]'>
-                  <div className='w-[100%] flex items-center max-w-[600px] relative'>
+                <div className='input&search lg:mr-auto lg:ml-auto lg:w-[40%] relative'>
+                  <div className='w-[100%] flex items-center max-w-[600px]'>
                     <input className='w-[100%] outline-none px-3 py-1 sm:py-2 rounded-full' type='text' value={searchInput} placeholder='@username. . .' onChange={e=>{
                       setSearchInput(e.target.value);
                       if(e.target.value===''){
@@ -87,15 +86,33 @@ const Navbar = ({user,logged,token}) => {
                         setUsers([])
                       }
                     }}/>
-                    <div className='absolute right-3' onClick={searchUsers}>
-                      <img src={Rocket} alt="rocket" className='w-8' /> 
-                    </div>
-                    <div className='absolute left-0 right-0 -bottom-5'>
-                      {
-                        users.length>0 ? <DropDownNav/> : <p>{message}</p>
+
+                      {users.length>0 ? 
+                        <div className='absolute right-3'>
+                            <i className="bi bi-x text-lg text-red-700" onClick={()=>{
+                            setSearchInput('')
+                            setUsers([])
+                              }}>
+                            </i>
+                        </div>
+                        : 
+                  
+                        <div className='absolute right-3' onClick={searchUsers}>
+                          <img src={Rocket}  alt="rocket" className='w-8 active:-translate-y-24 duration-700'/>
+                        </div>
                       }
-                    </div>
+        
                   </div>
+                  {
+                      users.length>0 ?
+                        <div className='absolute left-0 right-0 ml-auto mr-auto -bottom-30 bg-gray50 z-20 overflow-y-scroll h-fit max-h-32 p-2 max-w-[70%] rounded-md flex flex-col gap-2'>
+                          {
+                              users.map(user=><DropDownNav key={user._id} username={user.username} email={user.email} photo={user.photo} />)
+                          }
+                        </div>
+                      :
+                      <p className='absolute left-0 right-0 -bottom-5 text-sm text-white'>{message}</p>
+                  }
                 </div>
                 <div className="hidden xs:flex logo&name gap-1 items-center">
                   <i className="bi bi-circle-fill text-2xl text-pink5"></i>
