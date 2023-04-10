@@ -46,8 +46,7 @@ const Navbar = ({user,logged,token}) => {
               authorization:`Bearer ${token}`
             }
           })
-          console.log(req)
-          
+
           if(req.data.ok===false)
             setMessage(req.data.msg)
 
@@ -56,7 +55,7 @@ const Navbar = ({user,logged,token}) => {
             setUsers(req.data)
           }
             setTimeout(() => {
-              if(req.data.ok===false && req.data.msg!=='No users found !'){
+              if(req.data.ok===false){
                 setSearchInput("")
                 setMessage('')
               }
@@ -66,7 +65,7 @@ const Navbar = ({user,logged,token}) => {
         console.log(error)
       }
     }
-
+    
   return (
     <div className='bg-purple15'>
         <div className='px-5 py-3 sm:px-7 sm:py-5 flex items-center justify-between max-w-[1800px] ml-auto mr-auto'>
@@ -77,10 +76,10 @@ const Navbar = ({user,logged,token}) => {
                 </div>
             }
             <div className='search&logo w-[100%] sm:w-[] flex items-center gap-4 lg:flex-row-reverse lg:w-[100%] '>
-                <div className='input&search lg:mr-auto lg:ml-auto lg:w-[40%] relative'>
-                  <div className='w-[100%] flex items-center max-w-[600px]'>
-                    <input className='w-[100%] outline-none px-3 py-1 sm:py-2 rounded-full' type='text' value={searchInput} placeholder='@username. . .' onChange={e=>{
-                      setSearchInput(e.target.value);
+                <div className='input&search lg:mr-auto lg:ml-auto lg:w-[40%] ml-auto mr-auto sm:m-0 relative'>
+                  <div className='input-container w-[100%] flex items-center max-w-[600px] relative'>
+                    <input className='w-[100%] outline-none px-3 py-1 sm:py-2 rounded-full sm:m-0 sm:text-sm md:text-base lg:text-lg min-w-[180px]' type='text' value={message==='No users found !'? message : searchInput} placeholder={`${message ? message : '@username...'}`} onChange={e=>{
+                      setSearchInput(e.target.value); 
                       if(e.target.value===''){
                         setMessage('');
                         setUsers([])
@@ -88,8 +87,8 @@ const Navbar = ({user,logged,token}) => {
                     }}/>
 
                       {users.length>0 ? 
-                        <div className='absolute right-3'>
-                            <i className="bi bi-x text-lg text-red-700" onClick={()=>{
+                        <div className='absolute right-1'>
+                            <i className="bi bi-x text-xs sm:text-sm md:text-base lg:text-lg text-red-700" onClick={()=>{
                             setSearchInput('')
                             setUsers([])
                               }}>
@@ -97,26 +96,24 @@ const Navbar = ({user,logged,token}) => {
                         </div>
                         : 
                   
-                        <div className='absolute right-3' onClick={searchUsers}>
-                          <img src={Rocket}  alt="rocket" className='w-8 active:-translate-y-24 duration-700'/>
+                        <div className='absolute right-1' onClick={searchUsers}>
+                          <img src={Rocket}  alt="rocket" className=' w-7 active:-translate-y-24 duration-700'/>
                         </div>
                       }
         
                   </div>
                   {
-                      users.length>0 ?
-                        <div className='absolute left-0 right-0 ml-auto mr-auto -bottom-30 bg-gray50 z-20 overflow-y-scroll h-fit max-h-32 p-2 max-w-[70%] rounded-md flex flex-col gap-2'>
+                      users.length>0 &&
+                        <div className='absolute left-0 right-0 ml-auto mr-auto -bottom-30 bg-gray50 z-20 overflow-y-scroll h-fit max-h-32 p-2 max-w-sm rounded-md flex flex-col gap-2'>
                           {
                               users.map(user=><DropDownNav key={user._id} username={user.username} email={user.email} photo={user.photo} />)
                           }
                         </div>
-                      :
-                      <p className='absolute left-0 right-0 -bottom-5 text-sm text-white'>{message}</p>
                   }
                 </div>
-                <div className="hidden xs:flex logo&name gap-1 items-center">
+                <div className="hidden xs:flex logo&name gap-1 items-center ml-auto sm:ml-0">
                   <i className="bi bi-circle-fill text-2xl text-pink5"></i>
-                  <p className="font-semibold text-lg lg:mr-auto whitespace-nowrap">
+                  <p className="font-semibold text-base sm:text-lg lg:mr-auto whitespace-nowrap">
                       AMedia app
                       <span className="font-semibold text-pink5"> .</span>
                   </p>
@@ -125,8 +122,8 @@ const Navbar = ({user,logged,token}) => {
           
             {logged===true?
             
-            <div className='hidden features md:flex md:items-center md:gap-5 ml-5 relative'>
-              <div className='hidden md:block'>
+            <div className='hidden features sm:flex sm:items-center sm:gap-5 ml-5 relative'>
+              <div className='hidden sm:block'>
                   <i className="bi bi-people-fill text-white text-lg"></i>
               </div>
               <div className='profile hover:scale-105 active:scale-95 relative' onClick={SideFunction}>

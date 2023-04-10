@@ -1,3 +1,7 @@
 body{
     overflow-y: hidden;
 }
+
+.input-container input::placeholder {
+    font-size: 14px;
+  }
