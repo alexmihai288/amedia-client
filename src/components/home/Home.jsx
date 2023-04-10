@@ -4,7 +4,7 @@ import LeftSide  from './LeftSide'
 import axios from 'axios'
 import Post from './Post'
 
-const Home = ({user,logged}) => {
+const Home = ({user,logged,token}) => {
 
   const [posts, setPosts] = useState([]);
 
@@ -26,12 +26,12 @@ const Home = ({user,logged}) => {
 
   return (
     <div className='font-Karla bg-gray50 min-h-[100vh] flex flex-col'>
-      <Navbar user={user} logged={logged}/>
+      <Navbar user={user} logged={logged} token={token}/>
       <div className='flex gap-1'>
         <div className='leftSide hidden sm:block min-w-fit h-[calc(100vh-80px)]'>
           <LeftSide />
         </div>
-        <div className='overflow-y-scroll max-h-[calc(100vh-80px)] w-[100%] grid grid-cols-1 p-10 gap-10 sm:gap-8 sm:p-8 sm:grid-cols-2 lg:p-10 lg:gap-10 lg:grid-cols-3 xl:gap-14 xl:p-14 h-fit'>
+        <div className='overflow-y-scroll max-h-[calc(100vh-80px)] w-[100%] grid grid-cols-1 p-10 gap-10 sm:gap-8 sm:p-8 md:grid-cols-2 lg:p-10 lg:gap-10 lg:grid-cols-3 xl:gap-14 xl:p-14 h-fit'>
           {
             posts ?
             posts.map(post=>(

@@ -3,8 +3,11 @@ import { useState,useRef,useEffect } from 'react'
 import LeftSide from './LeftSide'
 import { Link } from 'react-router-dom'
 import DropDown from './DropDown'
+import axios from 'axios'
+import Rocket from '../../images/rocket.png'
+import DropDownNav from './DropDownNav'
 
-const Navbar = ({user,logged}) => {
+const Navbar = ({user,logged,token}) => {
 
   //showing or not showing the left side/dropdown
     const [showLeftSide,setShowLeftSide] = useState(false)
@@ -31,9 +34,43 @@ const Navbar = ({user,logged}) => {
     }, [])
   //end here
 
+    const [searchInput,setSearchInput] = useState("");
+    const [users,setUsers] = useState([])
+    const [message,setMessage] = useState('');    
+
+
+    async function searchUsers(){
+      try {
+        setMessage('Loading...')
+          const req = await axios.get(`search/username/?username=${searchInput}`,{
+            headers:{
+              authorization:`Bearer ${token}`
+            }
+          })
+          console.log(req)
+
+          if(req.data.ok===false)
+            setMessage(req.data.msg)
+
+          if(req.data.length>0){
+            setMessage('')
+            setUsers(req.data)
+          }
+            setTimeout(() => {
+              if(req.data.ok===false && req.data.msg!=='No users found !'){
+                setSearchInput("")
+                setMessage('')
+              }
+            }, 1500);
+          
+      }catch(error) {
+        console.log(error)
+      }
+    }
+
   return (
     <div className='bg-purple15'>
-        <div className='px-5 py-3 sm:px-7 sm:py-5 flex items-center justify-between max-w-[1600px] ml-auto mr-auto'>
+        <div className='px-5 py-3 sm:px-7 sm:py-5 flex items-center justify-between max-w-[1800px] ml-auto mr-auto'>
             <i className='mr-2 bi bi-list text-pink5 text-3xl sm:hidden' onClick={SideFunction}></i>
             { showLeftSide &&
                 <div className='z-30 absolute left-0 top-0 bottom-0 sm:hidden bg-gray50 border-r-2 border-textGray' ref={LeftDiv}>
@@ -41,7 +78,25 @@ const Navbar = ({user,logged}) => {
                 </div>
             }
             <div className='search&logo w-[100%] sm:w-[] flex items-center gap-4 lg:flex-row-reverse lg:w-[100%] '>
-                <input className='w-[100%] outline-none px-3 py-1 sm:py-2 rounded-full lg:mr-auto lg:ml-auto lg:w-[40%] max-w-[600px]' type='text' placeholder='@username. . .'/>
+                <div className='input&search lg:mr-auto lg:ml-auto lg:w-[40%]'>
+                  <div className='w-[100%] flex items-center max-w-[600px] relative'>
+                    <input className='w-[100%] outline-none px-3 py-1 sm:py-2 rounded-full' type='text' value={searchInput} placeholder='@username. . .' onChange={e=>{
+                      setSearchInput(e.target.value);
+                      if(e.target.value===''){
+                        setMessage('');
+                        setUsers([])
+                      }
+                    }}/>
+                    <div className='absolute right-3' onClick={searchUsers}>
+                      <img src={Rocket} alt="rocket" className='w-8' /> 
+                    </div>
+                    <div className='absolute left-0 right-0 -bottom-5'>
+                      {
+                        users.length>0 ? <DropDownNav/> : <p>{message}</p>
+                      }
+                    </div>
+                  </div>
+                </div>
                 <div className="hidden xs:flex logo&name gap-1 items-center">
                   <i className="bi bi-circle-fill text-2xl text-pink5"></i>
                   <p className="font-semibold text-lg lg:mr-auto whitespace-nowrap">
