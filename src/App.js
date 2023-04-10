@@ -5,6 +5,7 @@ import Login from './components/auths/Login'
 import Registering from './components/auths/Registering';
 import Home from './components/home/Home';
 import axios from "axios";
+import CreatePost from './components/home/CreatePost';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
         <Route path='/' element={<Home user={user} logged={logged} token={token}/>}/>
         <Route path='/register' element={<Registering setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/>
         <Route path='/login' element={<Login setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/> 
+        <Route path='/createPost' element={<CreatePost/>}/>
       </Routes>
     </Router>
   );
