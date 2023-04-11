@@ -17,6 +17,7 @@ const Home = ({user,logged,token}) => {
       if(req.data.post){
        setPosts(req.data.post);
       }
+      console.log(req)
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +40,7 @@ const Home = ({user,logged,token}) => {
               posts ?
               posts.map(post=>(
                 <div key={post._id} className='p-2 bg-white rounded-md h-fit '>
-                  <Post {...post} user={user}/>
+                  <Post {...post} user={user} token={token}/>
                 </div>
               ))
               :
