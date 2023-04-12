@@ -1,12 +1,12 @@
 import React from 'react'
 import axios from 'axios';
 import { useState,useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Post = ({description,imageUrl,createdBy,user,_id,token,upVotes,downVotes}) => {
   
   const [username, setUsername] = useState();
-  const [profileImage, setProfileImage] = useState()
-
+  const [profileImage, setProfileImage] = useState();
 
   async function decodeUsername() {
     try {
@@ -22,9 +22,8 @@ const Post = ({description,imageUrl,createdBy,user,_id,token,upVotes,downVotes})
     decodeUsername();
   }, []);
 
-
-  const [likes,setLikes] = useState(upVotes)
-  const [dislikes,setDislikes] = useState(downVotes)
+  const [likes,setLikes] = useState(upVotes || [])
+  const [dislikes,setDislikes] = useState(downVotes || [])
 
   const [clicked,setClicked] = useState(false);
   
@@ -32,6 +31,34 @@ const Post = ({description,imageUrl,createdBy,user,_id,token,upVotes,downVotes})
     liked:false,
     disliked:false
   })
+
+  useEffect(()=>{
+    checkLikedDisliked();
+  },[])
+
+  function checkLikedDisliked(){
+    likes.forEach(likeId=>{
+      if(likeId===user._id){
+        setPostActioners(prev=>{
+          return {
+            ...prev,
+            liked:true
+          }
+        })
+      }
+    })
+
+    dislikes.forEach(dislikeId=>{
+      if(dislikeId===user._id){
+        setPostActioners(prev=>{
+          return {
+            ...prev,
+            disliked:true
+          }
+        })
+      }
+    })
+  }
 
   function handleLike(){
     if(!postActioners.liked){
@@ -99,14 +126,14 @@ const Post = ({description,imageUrl,createdBy,user,_id,token,upVotes,downVotes})
 
   return (
     <div className='post'>
-        <div className='postImage relative'>
-          <img src={imageUrl} alt='postImage' className='w-full'/>
-          <div className='absolute -top-5 -left-5'>
+        <Link to={`/posts/${_id}`} className='postImage relative cursor-pointer' >
+          <img src={imageUrl} alt='postImage' className='image w-full h-fit'/>
+          <div className='absolute -top-5 -left-5 flex flex-col gap-1'>
             <img src={profileImage? profileImage : 'loading'} alt='profileImage' className='w-8 rounded-full'/>
+            <p className='ml-8 postUser text-xs text-white'>@{user.username}</p>
           </div>
-        </div>
+        </Link>
         <p className='text-sm ml-5'>{description}</p>
-        <p>{username? username :'loading'}</p>
         <div className='flex items-center justify-center text-lg px-4 mt-5'>
         {user._id===createdBy && <button className='bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto'>Edit</button>}
           <div className='votes flex items-center gap-8 ml-auto mr-auto'>
@@ -116,17 +143,17 @@ const Post = ({description,imageUrl,createdBy,user,_id,token,upVotes,downVotes})
                 handleLike()
                 setPostActioners(prev=>{
                   return {
-                    ...prev,
+                    disliked:false,
                     liked:!prev.liked
                   }
                 })
                 setClicked(true);
               }}></i>:
-              <i class="bi bi-caret-up-fill" onClick={()=>{
+              <i className="bi bi-caret-up-fill" onClick={()=>{
                 handleLike()
                 setPostActioners(prev=>{
                   return {
-                    ...prev,
+                    disliked:false,
                     liked:!prev.liked
                   }
                 })
@@ -142,7 +169,7 @@ const Post = ({description,imageUrl,createdBy,user,_id,token,upVotes,downVotes})
                   handleDislike()
                   setPostActioners(prev=>{
                     return {
-                      ...prev,
+                      liked:false,
                       disliked:!prev.disliked
                     }
                   })
@@ -151,7 +178,7 @@ const Post = ({description,imageUrl,createdBy,user,_id,token,upVotes,downVotes})
                   handleDislike();
                   setPostActioners(prev=>{
                     return {
-                      ...prev,
+                      liked:false,
                       disliked:!prev.disliked
                     }
                   })

@@ -17,14 +17,12 @@ const Home = ({user,logged,token}) => {
       if(req.data.post){
        setPosts(req.data.post);
       }
-      console.log(req)
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    
     getAllPosts();
   }, []);
 
@@ -35,7 +33,7 @@ const Home = ({user,logged,token}) => {
         <div className='leftSide hidden sm:block min-w-fit h-[calc(100vh-80px)]'>
           <LeftSide setCreatePostWindow={setCreatePostWindow} />
         </div>
-          <div className='overflow-y-scroll max-h-[calc(100vh-80px)] w-[100%] grid grid-cols-1 p-10 gap-10 sm:gap-8 sm:p-8 md:grid-cols-2 lg:p-10 lg:gap-10 lg:grid-cols-3 xl:gap-14 xl:p-14 h-fit'>
+          <div className='overflow-y-scroll max-h-[calc(100vh-80px)] w-[100%] grid grid-cols-1 p-10 gap-10 sm:gap-8 sm:p-8 md:grid-cols-2 lg:p-10 lg:grid-cols-3 xl:p-14 h-fit'>
             {
               posts ?
               posts.map(post=>(

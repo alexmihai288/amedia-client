@@ -5,3 +5,20 @@ body{
 .input-container input::placeholder {
     font-size: 14px;
   }
+
+.postUser{
+    opacity: 0;
+    transition: all 0.30s;
+}
+
+.postImage:hover .postUser{
+    opacity: 1;
+}
+
+.image{
+    transition: all 0.30s;
+}
+.image:hover{
+    filter: brightness(0.8);
+}
+  
