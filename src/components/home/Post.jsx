@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Post = ({description,imageUrl,createdBy,user,_id,token,upVotes,downVotes}) => {
+const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token}) => {
   
   const [username, setUsername] = useState();
   const [profileImage, setProfileImage] = useState();
