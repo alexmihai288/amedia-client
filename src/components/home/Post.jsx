@@ -22,8 +22,8 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token})
     decodeUsername();
   }, []);
 
-  const [likes,setLikes] = useState(upVotes || [])
-  const [dislikes,setDislikes] = useState(downVotes || [])
+  const [likes,setLikes] = useState(upVotes ?? [])
+  const [dislikes,setDislikes] = useState(downVotes ?? [])
 
   const [clicked,setClicked] = useState(false);
   

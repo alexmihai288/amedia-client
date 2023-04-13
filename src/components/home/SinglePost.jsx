@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+
 
 const SinglePost = ({ token, user }) => {
   const postId = useParams();
   const [message, setMessage] = useState("");
   const [post, setPost] = useState({});
+  const [usersComments,setUsersComments] = useState([])
 
   const [postLoaded, setPostLoaded] = useState(false);
 
@@ -49,8 +51,38 @@ const SinglePost = ({ token, user }) => {
     }
   }
 
+  const [commentMsg,setCommentMsg] = useState('')
+  async function decodeUserInComment(userInComment,commentText){
+    setCommentMsg('Loading...')
+    try {
+      const req = await axios.get(`/search/decodeByUserId/${userInComment}`)
+      if(req.data.ok===true){
+        setCommentMsg('')
+        setUsersComments(prevComments=>{
+          return[
+            ...prevComments,
+            {
+              userId:req.data.user,
+              comment:commentText
+            }
+          ]
+        })
+      }
+      if(req.data.ok===false)
+        setCommentMsg(req.data.msg)
+    }catch (error){
+      setCommentMsg('Internal server error')
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
-    if (postLoaded) decodeUsername();
+    if (postLoaded){
+      decodeUsername()
+      post.comments.forEach(comment=>{
+        decodeUserInComment(comment.userId,comment.comment)
+      })
+    };
   }, [postLoaded]);
 
   const [likes, setLikes] = useState([]);
@@ -65,8 +97,8 @@ const SinglePost = ({ token, user }) => {
 
   useEffect(() => {
     if (postLoaded) {
-      setLikes(post.upVotes);
-      setDislikes(post.downVotes);
+      setLikes(post.upVotes ?? []);
+      setDislikes(post.downVotes ?? []);
     }
   }, [postLoaded]);
 
@@ -169,16 +201,35 @@ const SinglePost = ({ token, user }) => {
       console.log(error);
     }
   }
+  const commentInput = useRef();
+
+  async function handleComment(){
+    try{
+      const req = await axios.patch(`/posts/${post._id}`,{comments:[...usersComments,{userId:user._id,comment:commentInput.current.value}]},{
+        headers:{
+          authorization:`Bearer ${token}`
+        }
+      })
+      setUsersComments(prev=>{
+        return [...prev,{
+          userId:user,
+          comment:commentInput.current.value
+        }]
+      })
+    }catch(err){
+      console.log(err);
+    }
+  }
 
   return (
     <div>
       {message ? (
         message
       ) : (
-        <div className="min-h-[100vh] max-h-[100vh] bg-gray50 flex items-center justify-center gap-1">
+        <div className="min-h-[100vh] max-h-[100vh] bg-gray50 flex items-center justify-center gap-1 px-20">
           <div className="flex gap-1">
             <div className="post bg-white p-2 rounded-tl-md rounded-bl-md">
-              <img src={post.imageUrl} alt="postImage" className="rounded-md" />
+              <img src={post.imageUrl} alt="postImage" className="rounded-md object-cover max-h-[850px]" />
               <p className="text-sm ml-5">{post.description}</p>
               <div className="flex items-center justify-center text-lg px-4 mt-5">
                 {user._id === post.createdBy && (
@@ -262,23 +313,29 @@ const SinglePost = ({ token, user }) => {
               </div>
             </div>
             <div className="commentSection bg-white rounded-tr-md rounded-br-md p-2 flex flex-col gap-2 w-[100%]">
-              <p className="text-3xl font-semibold">Comments:364</p>
-
-              <div className="comments flex flex-col border-2 border-pink5 max-h-[calc(100%-112px)] h-[calc(100%-112px)] overflow-y-scroll gap-2 p-2">
-                <div className="flex items-center gap-2 bg-gray50 p-1 rounded-md">
-                  <div className="profile&name flex items-center gap-1">
-                    <img src={user.photo}  alt="profilePhoto" className="w-6 rounded-full"/>
-                    <p className="text-sm">{user.username}:</p>
-                  </div>
-                  <div className="comment">
-                    <p className="text-xs">comment</p>
-                  </div>
+              <p className="text-3xl font-semibold">Comments:{usersComments.length}</p>
+          
+                  <div className="comments flex flex-col border-2 border-pink5 max-h-[calc(100%-112px)] h-[50vh] overflow-y-scroll gap-2 p-2">
+                  {commentMsg ? commentMsg :
+                        usersComments.map(userComment=>{
+                        return <div  className="flex items-center gap-2 bg-gray50 p-1 rounded-md">
+                          <div className="profile&name flex items-center gap-1">
+                            <img src={userComment.userId.photo}  alt="profilePhoto" className="w-6 rounded-full"/>
+                            <p className="text-sm font-semibold">{userComment.userId.username}:<span className="text-xs ml-1">{userComment.userId._id===user._id ? '(you)' : ''}</span></p>
+                          </div>
+                          <div className="comment">
+                            <p className="text-xs">{userComment.comment}</p>
+                          </div>
+                      </div>
+                      })
+                  }
+                  
                 </div>
-              </div>
+             
 
               <div className="postComment flex items-center gap-2 ml-auto mr-auto mt-auto mb-auto">
-                <input className="border-b-2 border-pink5 outline-none"/>
-                <button className="postComment bg-[#3f9ee3] text-sm text-white tracking-tighter px-2 py-0.5 rounded-full">Comment</button>
+                <input ref={commentInput} className="border-b-2 border-pink5 outline-none"/>
+                <button onClick={handleComment} className="postComment bg-[#3f9ee3] text-sm text-white tracking-tighter px-2 py-0.5 rounded-full">Comment</button>
               </div>
             </div>
           </div>
