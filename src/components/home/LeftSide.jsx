@@ -1,7 +1,7 @@
 import React from 'react'
 import Rocket from '../../images/rocket.png'
 
-const LeftSide = ({setCreatePostWindow}) => {
+const LeftSide = ({setCreatePostWindow,logged}) => {
   return (
     <div className='leftSide flex flex-col py-10 px-5 h-[100%] bg-gray50 sm:bg-purple15 sm:border-t-2 sm:border-t-gray50'>
       <div className='options flex flex-col gap-5 relative'>
@@ -19,7 +19,8 @@ const LeftSide = ({setCreatePostWindow}) => {
             <p className='text-textGray sm:text-gray50'>Settings</p>
             <i className="bi bi-sliders text-lg text-pink5"></i>
           </div>
-          <button className='mt-3 self-start bg-[#3f9ee3] text-white text-sm whitespace-nowrap px-2 py-1 rounded-md' onClick={()=>setCreatePostWindow(true)}>Create a post</button>
+          {logged ? <button className='mt-3 self-start bg-[#3f9ee3] text-white text-sm whitespace-nowrap px-2 py-1 rounded-md' onClick={()=>setCreatePostWindow(true)}>Create a post</button>:          
+                    <button className='mt-3 self-start bg-textGray text-white text-sm whitespace-nowrap px-2 py-1 rounded-md'>Create a post</button>}
       </div>
 
       <div className="logo&name&rocket mt-auto mb-auto ml-auto mr-auto">

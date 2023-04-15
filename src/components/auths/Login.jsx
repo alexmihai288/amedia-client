@@ -114,7 +114,7 @@ const Login = ({setStatus,status,isNotEmpty,showPassword,setShowPassword}) => {
                     <input
                       id="password"
                       className="outline-none bg-inherit font-bold w-[100%]"
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       onChange={(e) =>
                         setController2((prevState) => {
                           return {

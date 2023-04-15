@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token}) => {
+const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,logged}) => {
   
   const [username, setUsername] = useState();
   const [profileImage, setProfileImage] = useState();
@@ -130,7 +130,7 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token})
           <img src={imageUrl} alt='postImage' className='image w-full h-fit'/>
           <div className='absolute -top-5 -left-5 flex flex-col gap-1'>
             <img src={profileImage? profileImage : 'loading'} alt='profileImage' className='w-8 rounded-full'/>
-            <p className='ml-8 postUser text-xs text-white'>@{user.username}</p>
+            <p className='ml-8 postUser text-xs text-white'>@{username}</p>
           </div>
         </Link>
         <p className='text-sm ml-5'>{description}</p>
@@ -138,7 +138,7 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token})
         {user._id===createdBy && <button className='bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto'>Edit</button>}
           <div className='votes flex items-center gap-8 ml-auto mr-auto'>
             <div className='upVote flex items-center gap-1'>
-              {!postActioners.liked ? 
+              {logged ? !postActioners.liked ? 
                <i className="bi bi-caret-up" onClick={()=>{
                 handleLike()
                 setPostActioners(prev=>{
@@ -159,12 +159,15 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token})
                 })
                 setClicked(true);
               }}></i>
+              :
+              <i className="bi bi-caret-up-fill text-textGray"></i>
               }
              
               <p className='text-sm text-textGray tracking-tighter'>{likes.length}</p>
             </div>
             <div className='downVote flex items-center gap-1'>
               {
+                logged ?
                 !postActioners.disliked ? <i className="bi bi-caret-down" onClick={()=>{
                   handleDislike()
                   setPostActioners(prev=>{
@@ -184,6 +187,8 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token})
                   })
                   setClicked(true);
                 }}></i>
+                :
+                <i className="bi bi-caret-down-fill text-textGray"></i>
               }
            
               <p className='text-sm text-textGray tracking-tighter'>{dislikes.length}</p>
