@@ -11,6 +11,8 @@ import SinglePost from './components/home/SinglePost';
 
 function App() {
   
+  const [EditPost,setEditPost] = useState(false)
+
   const [status, setStatus] = useState("");
 
   function isNotEmpty(input) {
@@ -50,11 +52,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home user={user} logged={logged} token={token}/>}/>
+        <Route path='/' element={<Home user={user} logged={logged} token={token} setEditPost={setEditPost}/>}/>
         <Route path='/register' element={<Registering setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/>
         <Route path='/login' element={<Login setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/> 
         <Route path='/createPost' element={<CreatePost/>}/>
-        <Route path='/posts/:id' element={<SinglePost token={token} user={user} />} />
+        <Route path='/posts/:id' element={<SinglePost token={token} user={user} EditPost={EditPost}/>} />
       </Routes>
     </Router>
   );

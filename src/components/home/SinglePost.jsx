@@ -1,9 +1,10 @@
 import React, { useEffect, useState,useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import {nanoid} from "nanoid"
 
 
-const SinglePost = ({ token, user }) => {
+const SinglePost = ({ token, user,EditPost}) => {
   const postId = useParams();
   const [message, setMessage] = useState("");
   const [post, setPost] = useState({});
@@ -62,6 +63,7 @@ const SinglePost = ({ token, user }) => {
           return[
             ...prevComments,
             {
+              id:nanoid(),
               userId:req.data.user,
               comment:commentText
             }
@@ -77,13 +79,16 @@ const SinglePost = ({ token, user }) => {
   }
 
   useEffect(() => {
-    if (postLoaded){
-      decodeUsername()
-      post.comments.forEach(comment=>{
-        decodeUserInComment(comment.userId,comment.comment)
-      })
-    };
-  }, [postLoaded]);
+    if (postLoaded && post.comments) {
+      decodeUsername();
+      post.comments.forEach((comment) => {
+        if (comment && comment.userId && comment.comment) {
+          decodeUserInComment(comment.userId, comment.comment);
+        }
+      });
+    }
+    
+  }, [postLoaded])
 
   const [likes, setLikes] = useState([]);
   const [dislikes, setDislikes] = useState([]);
@@ -230,13 +235,13 @@ const SinglePost = ({ token, user }) => {
           <div className="flex gap-1">
             <div className="post bg-white p-2 rounded-tl-md rounded-bl-md">
               <img src={post.imageUrl} alt="postImage" className="rounded-md object-cover max-h-[850px]" />
-              <p className="text-sm ml-5">{post.description}</p>
+              <div className="flex items-center gap-2 mt-1">
+                <p className="text-sm ml-5">{post.description}</p>
+                {EditPost && 
+                  <button className="bg-pink5 text-white text-xs px-1 py-1 rounded-lg tracking-tighter">Edit description</button> 
+                }
+              </div>
               <div className="flex items-center justify-center text-lg px-4 mt-5">
-                {user._id === post.createdBy && (
-                  <button className="bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto">
-                    Edit
-                  </button>
-                )}
                 <div className="votes flex items-center gap-8 ml-auto mr-auto">
                   <div className="upVote flex items-center gap-1">
                     {!postActioners.liked ? (
@@ -326,6 +331,18 @@ const SinglePost = ({ token, user }) => {
                           <div className="comment">
                             <p className="text-xs">{userComment.comment}</p>
                           </div>
+                          {EditPost && <i className="bi bi-x text-red-700 ml-auto mr-5" onClick={async()=>{
+                            try{
+                              await axios.patch(`/posts/${post._id}`,{comments:usersComments.filter(com=>com.id!==userComment.id)},{
+                                headers:{
+                                  authorization:`Bearer ${token}`
+                                }
+                              })
+                              setUsersComments(prevState => prevState.filter(com => com.id !== userComment.id));
+                            }catch(error){
+                              console.log(error)
+                            }
+                          }}></i>}
                       </div>
                       })
                   }
@@ -335,7 +352,12 @@ const SinglePost = ({ token, user }) => {
 
               <div className="postComment flex items-center gap-2 ml-auto mr-auto mt-auto mb-auto">
                 <input ref={commentInput} className="border-b-2 border-pink5 outline-none"/>
-                <button onClick={handleComment} className="postComment bg-[#3f9ee3] text-sm text-white tracking-tighter px-2 py-0.5 rounded-full">Comment</button>
+                <button onClick={()=>{
+                  handleComment()
+                  setTimeout(() => {
+                    commentInput.current.value=''
+                  }, 1000);
+                  }} className="postComment bg-[#3f9ee3] text-sm text-white tracking-tighter px-2 py-0.5 rounded-full">Comment</button>
               </div>
             </div>
           </div>

@@ -63,7 +63,7 @@ const CreatePost = ({setCreatePostWindow,token}) => {
         <div className='image'>
           <div className="alert flex items-center gap-1 text-sm">
                     <span className="text-red-700">*</span>
-                    <p>Username Add an image</p>
+                    <p>Add an image url</p>
           </div>
           <input type='text' placeholder='image URL' className='ml-1 px-2 py-1 outline-none border-b-2 border-gray50 text-sm text-textGray' onChange={(e)=>setController(prevState=>{
             return{

@@ -5,11 +5,12 @@ import axios from 'axios'
 import Post from './Post'
 import CreatePost from './CreatePost'
 
-const Home = ({user,logged,token}) => {
+const Home = ({user,logged,token,setEditPost}) => {
 
   const [CreatePostWindow,setCreatePostWindow] = useState(false)
 
   const [posts, setPosts] = useState([]);
+
 
   async function getAllPosts() {
     try {
@@ -38,7 +39,7 @@ const Home = ({user,logged,token}) => {
               posts ?
               posts.map(post=>(
                 <div key={post._id} className='p-2 bg-white rounded-md h-fit '>
-                  <Post {...post} user={user} token={token} logged={logged}/>
+                  <Post {...post} user={user} token={token} logged={logged} setEditPost={setEditPost}/>
                 </div>
               ))
               :

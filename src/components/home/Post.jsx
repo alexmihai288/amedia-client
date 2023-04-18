@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,logged}) => {
+const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,logged,setEditPost}) => {
   
   const [username, setUsername] = useState();
   const [profileImage, setProfileImage] = useState();
@@ -126,16 +126,26 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,l
 
   return (
     <div className='post'>
-        <Link to={`/posts/${_id}`} className='postImage relative cursor-pointer' >
+      {logged ? <Link to={`/posts/${_id}`} className='postImage relative cursor-pointer'onClick={()=>setEditPost(false)} >
           <img src={imageUrl} alt='postImage' className='image w-full h-fit'/>
           <div className='absolute -top-5 -left-5 flex flex-col gap-1'>
             <img src={profileImage? profileImage : 'loading'} alt='profileImage' className='w-8 rounded-full'/>
             <p className='ml-8 postUser text-xs text-white'>@{username}</p>
           </div>
         </Link>
+        :
+        <div className='postImage relative cursor-pointer'>
+          <img src={imageUrl} alt='postImage' className='image w-full h-fit'/>
+          <div className='absolute -top-5 -left-5 flex flex-col gap-1'>
+            <img src={profileImage? profileImage : 'loading'} alt='profileImage' className='w-8 rounded-full'/>
+            <p className='ml-8 postUser text-xs text-white'>@{username}</p>
+          </div>
+        </div>  
+      }
+        
         <p className='text-sm ml-5'>{description}</p>
         <div className='flex items-center justify-center text-lg px-4 mt-5'>
-        {user._id===createdBy && <button className='bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto'>Edit</button>}
+        {user._id===createdBy && <Link to={`/posts/${_id}`} className='bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto' onClick={()=>setEditPost(true)}>Edit</Link>}
           <div className='votes flex items-center gap-8 ml-auto mr-auto'>
             <div className='upVote flex items-center gap-1'>
               {logged ? !postActioners.liked ? 
