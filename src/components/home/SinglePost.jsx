@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import {nanoid} from "nanoid"
 
-
 const SinglePost = ({ token, user,EditPost}) => {
   const postId = useParams();
   const [message, setMessage] = useState("");
@@ -226,6 +225,10 @@ const SinglePost = ({ token, user,EditPost}) => {
     }
   }
 
+  const [descriptionWnw,setDescriptionWnd] = useState(false)
+  const descUpdInput = useRef()
+  const [updMsg,setUpdMsg] = useState('')
+
   return (
     <div>
       {message ? (
@@ -235,10 +238,51 @@ const SinglePost = ({ token, user,EditPost}) => {
           <div className="flex gap-1">
             <div className="post bg-white p-2 rounded-tl-md rounded-bl-md">
               <img src={post.imageUrl} alt="postImage" className="rounded-md object-cover max-h-[850px]" />
-              <div className="flex items-center gap-2 mt-1">
+              <div className="flex items-center gap-2 mt-1 relative">
                 <p className="text-sm ml-5">{post.description}</p>
                 {EditPost && 
-                  <button className="bg-pink5 text-white text-xs px-1 py-1 rounded-lg tracking-tighter">Edit description</button> 
+                  <button className="bg-pink5 text-white text-xs px-1 py-1 rounded-lg tracking-tighter" onClick={()=>setDescriptionWnd(true)}>Edit description</button> 
+                }
+                {
+                  descriptionWnw && <div className="absolute left-[15%] bottom-10 bg-white p-3 rounded-md">
+                    <div className="flex flex-col">
+                      <p className="text-sm bg-textGray px-1 py-0.5">Change description</p>
+                      <input className="outline-none text-xs bg-gray50 py-2 px-1" ref={descUpdInput}/>
+                      <button className="bg-[#3f9ee3] text-white px-1 py-0.5 rounded-xl tracking-tighter self-center mt-1 text-xs" onClick={async ()=>{
+                          if(descUpdInput==='')
+                            setUpdMsg('This field cannot be empty !')
+                          else
+                          {
+                            try{
+                              setUpdMsg('Loading...')
+                              await axios.patch(`/posts/${post._id}`,{description:descUpdInput.current.value},{
+                                headers:{
+                                  authorization:`Bearer ${token}`
+                                }
+                              })
+                              setUpdMsg('Description successfully updated !')
+                              setPost(prevPost=>{
+                                return{
+                                  ...prevPost,
+                                  description:descUpdInput.current.value
+                                }
+                              })
+                            }
+                            catch(error){
+                              setUpdMsg('Internal server error...')
+                              console.log(error)
+                            }
+                          }
+                          setTimeout(() => {
+                            setUpdMsg('')
+                            setDescriptionWnd(false)
+                          }, 1000);
+                        
+                      }}>OK</button>
+                      <p className={`${updMsg==='Description successfully updated !' ? 'text-green-700' : updMsg==='Loading...' ? 'text-black' : 'text-red-700'} text-sm text-center`}>{updMsg}</p>
+                    </div>
+                    <i className="bi bi-x text-red-700 ml-auto mr-5 cursor-pointer absolute -top-1.5 -right-5" onClick={()=>setDescriptionWnd(false)}></i>
+                  </div>
                 }
               </div>
               <div className="flex items-center justify-center text-lg px-4 mt-5">
@@ -331,7 +375,7 @@ const SinglePost = ({ token, user,EditPost}) => {
                           <div className="comment">
                             <p className="text-xs">{userComment.comment}</p>
                           </div>
-                          {EditPost && <i className="bi bi-x text-red-700 ml-auto mr-5" onClick={async()=>{
+                          {EditPost && <i className="bi bi-x text-red-700 ml-auto mr-5 cursor-pointer" onClick={async()=>{
                             try{
                               await axios.patch(`/posts/${post._id}`,{comments:usersComments.filter(com=>com.id!==userComment.id)},{
                                 headers:{
