@@ -7,7 +7,7 @@ import axios from 'axios'
 import Rocket from '../../images/rocket.png'
 import DropDownNav from '../home/DropDownNav'
 
-const Navbar = ({user,logged,token}) => {
+const Navbar = ({user,logged,token,setCreatePostWindow}) => {
 
   //showing or not showing the left side/dropdown
     const [showLeftSide,setShowLeftSide] = useState(false)
@@ -72,7 +72,7 @@ const Navbar = ({user,logged,token}) => {
             <i className='mr-2 bi bi-list text-pink5 text-3xl sm:hidden' onClick={SideFunction}></i>
             { showLeftSide &&
                 <div className='z-30 absolute left-0 top-0 bottom-0 sm:hidden bg-gray50 border-r-2 border-textGray' ref={LeftDiv}>
-                    <LeftSide/>
+                    <LeftSide setCreatePostWindow={setCreatePostWindow} logged={logged}/>
                 </div>
             }
             <div className='search&logo w-[100%] sm:w-[] flex items-center gap-4 lg:flex-row-reverse lg:w-[100%] '>

@@ -2,6 +2,7 @@ import React, { useEffect, useState,useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import {nanoid} from "nanoid"
+import { useNavigate } from "react-router-dom";
 
 const SinglePost = ({ token, user,EditPost}) => {
   const postId = useParams();
@@ -229,15 +230,18 @@ const SinglePost = ({ token, user,EditPost}) => {
   const descUpdInput = useRef()
   const [updMsg,setUpdMsg] = useState('')
 
+  const [DeletePostWindow,setDeletePostWindow] = useState(false)
+
+  const nav = useNavigate()
   return (
     <div>
       {message ? (
         message
       ) : (
-        <div className="min-h-[100vh] max-h-[100vh] bg-gray50 flex items-center justify-center gap-1 px-20">
-          <div className="flex gap-1">
-            <div className="post bg-white p-2 rounded-tl-md rounded-bl-md">
-              <img src={post.imageUrl} alt="postImage" className="rounded-md object-cover max-h-[850px]" />
+        <div className="min-h-[100vh] max-h-[100vh] bg-gray50 flex items-center justify-center gap-1 px-10 py-5 sm:px-20">
+          <div className="flex flex-col sm:flex-row gap-1">
+            <div className="post bg-white p-2 rounded-tl-md rounded-bl-md relative">
+              <img src={post.imageUrl} alt="postImage" className="rounded-md object-cover h-96 sm:max-h-[850px]" />
               <div className="flex items-center gap-2 mt-1 relative">
                 <p className="text-sm ml-5">{post.description}</p>
                 {EditPost && 
@@ -360,11 +364,13 @@ const SinglePost = ({ token, user,EditPost}) => {
                 </div>
                 <i className="bi bi-share-fill text-base ml-auto"></i>
               </div>
+              {EditPost && <i className="bi bi-x text-red-700 ml-auto mr-5 cursor-pointer -top-1.5 -right-5 absolute sm:hidden" onClick={()=>setDeletePostWindow(true)}></i>}
+              
             </div>
-            <div className="commentSection bg-white rounded-tr-md rounded-br-md p-2 flex flex-col gap-2 w-[100%]">
+            <div className="commentSection bg-white rounded-tr-md rounded-br-md p-2 flex flex-col gap-2 w-[100%] relative">
               <p className="text-3xl font-semibold">Comments:{usersComments.length}</p>
           
-                  <div className="comments flex flex-col border-2 border-pink5 max-h-[calc(100%-112px)] h-[50vh] overflow-y-scroll gap-2 p-2">
+                  <div className="comments flex flex-col border-2 border-pink5 h-48 sm:max-h-[calc(100%-112px)] overflow-y-scroll gap-2 p-2">
                   {commentMsg ? commentMsg :
                         usersComments.map(userComment=>{
                         return <div  className="flex items-center gap-2 bg-gray50 p-1 rounded-md">
@@ -403,12 +409,47 @@ const SinglePost = ({ token, user,EditPost}) => {
                   }, 1000);
                   }} className="postComment bg-[#3f9ee3] text-sm text-white tracking-tighter px-2 py-0.5 rounded-full">Comment</button>
               </div>
+              {EditPost && <i className="bi bi-x text-red-700 ml-auto mr-5 cursor-pointer -top-1.5 -right-5 absolute hidden sm:block" onClick={()=>{
+                setDeletePostWindow(true)
+              }}></i>}
+              
             </div>
           </div>
         </div>
       )}
+      {DeletePostWindow  && 
+          <div className="absolute top-0 right-0 left-0 bottom-0 bg-[rgba(30,30,30,0.3)] z-20 flex items-center justify-center">
+            <div className="bg-gray50 rounded-md px-2.5 py-1">
+              <div className="flex flex-col">
+                  <i className="bi bi-x text-red-700 ml-auto" onClick={()=>{
+                    setDeletePostWindow(false)
+                  }}></i>
+                  <p className="font-semibold">Are you sure you want to delete the post ?</p>
+                  <div className="buttons flex items-center gap-1 ml-auto text-sm mt-5">
+                    <button className="bg-red-700 text-white px-2 py-0.5 rounded-md" onClick={async()=>{
+                        try{
+                          await axios.delete(`/posts/${post._id}`,{headers:
+                          {
+                            authorization:`Bearer ${token}`
+                          }})
+                          nav('/')
+                          
+                        }catch(error){
+                          console.log(error)
+                        } 
+                    }}>Delete</button>
+                    <button className="bg-pink5 text-white px-2 py-0.5 rounded-md" onClick={()=>setDeletePostWindow(false)}>Cancel</button>
+                  </div>
+              </div>
+                
+            </div>
+          </div>
+      }
+      
     </div>
   );
 };
 
 export default SinglePost;
+
+/***/
