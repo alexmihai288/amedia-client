@@ -7,6 +7,7 @@ import Home from './components/home/Home';
 import axios from "axios";
 import CreatePost from './components/home/CreatePost';
 import SinglePost from './components/home/SinglePost';
+import Profile from './components/profile/Profile';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
         <Route path='/login' element={<Login setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/> 
         <Route path='/createPost' element={<CreatePost/>}/>
         <Route path='/posts/:id' element={<SinglePost token={token} user={user} EditPost={EditPost}/>} />
+        <Route path='/profile' element={<Profile user={user}/>} />
       </Routes>
     </Router>
   );

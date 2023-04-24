@@ -128,7 +128,7 @@ const Navbar = ({user,logged,token,setCreatePostWindow}) => {
                   <i className="bi bi-people-fill text-white text-lg"></i>
               </div>
               <div className='profile hover:scale-105 active:scale-95 relative' onClick={SideFunction}>
-                  <img src='https://media.discordapp.net/attachments/724220064223592541/1092840802721480804/user.jpg?width=662&height=662' alt='profileImage' className="object-cover rounded-full w-8 z-20"/>
+                  <img src={user.photo} alt='profileImage' className="object-cover rounded-full w-8 z-20"/>
                   <div className='absolute -bottom-3 -right-2'>
                       <i className="bi bi-caret-down-fill text-pink5"></i>
                   </div>

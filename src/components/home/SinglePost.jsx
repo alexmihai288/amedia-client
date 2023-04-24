@@ -238,7 +238,7 @@ const SinglePost = ({ token, user,EditPost}) => {
       {message ? (
         message
       ) : (
-        <div className="min-h-[100vh] max-h-[100vh] bg-gray50 flex items-center justify-center gap-1 px-10 py-5 sm:px-20">
+        <div className="min-h-[100vh] max-h-[100vh] bg-gray50 flex items-center justify-center gap-1 px-10 py-5 sm:px-20 font-Karla">
           <div className="flex flex-col sm:flex-row gap-1">
             <div className="post bg-white p-2 rounded-tl-md rounded-bl-md relative">
               <img src={post.imageUrl} alt="postImage" className="rounded-md object-cover h-96 sm:max-h-[850px]" />

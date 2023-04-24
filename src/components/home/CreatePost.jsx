@@ -31,7 +31,8 @@ const CreatePost = ({setCreatePostWindow,token}) => {
           imageUrl:''
         })
         setOk()
-        window.location.reload()
+        if(req.data.ok===true)
+          window.location.reload()
       }, 1500);
 
     }

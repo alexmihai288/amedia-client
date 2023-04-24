@@ -130,7 +130,7 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,l
           <img src={imageUrl} alt='postImage' className='image w-full h-fit'/>
           <div className='absolute -top-5 -left-5 flex flex-col gap-1'>
             <img src={profileImage? profileImage : 'loading'} alt='profileImage' className='w-8 rounded-full'/>
-            <p className='ml-8 postUser text-xs text-white'>@{username}</p>
+            <p className='ml-8 postUser text-xs text-white'>@{username} {user._id===createdBy ?<span className='text-textGray'>(you)</span>: ''}</p>
           </div>
         </Link>
         :
@@ -182,8 +182,8 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,l
                   handleDislike()
                   setPostActioners(prev=>{
                     return {
-                      liked:false,
-                      disliked:!prev.disliked
+                      disliked:!prev.disliked,
+                      liked:false
                     }
                   })
                   setClicked(true);
@@ -191,8 +191,8 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,l
                   handleDislike();
                   setPostActioners(prev=>{
                     return {
-                      liked:false,
-                      disliked:!prev.disliked
+                      disliked:!prev.disliked,
+                      liked:false
                     }
                   })
                   setClicked(true);

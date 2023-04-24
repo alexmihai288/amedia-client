@@ -1,20 +1,27 @@
 import React from 'react'
 import Rocket from '../../images/rocket.png'
+import { Link } from 'react-router-dom'
 
 const LeftSide = ({setCreatePostWindow,logged}) => {
   return (
     <div className='leftSide flex flex-col py-10 px-5 h-[100%] bg-gray50 sm:bg-purple15 sm:border-t-2 sm:border-t-gray50'>
       <div className='options flex flex-col gap-5 relative'>
-          <div className='friends flex items-center gap-3'>
-            <p className="text-textGray sm:text-gray50">Friends</p>
-            <i className="bi bi-people-fill text-pink5 text-lg"></i>
-          </div>
-          <div className='profile flex items-center gap-3'>
-            <p className="text-textGray sm:text-gray50">Your profile</p>
-            <div className='border-2 border-pink5 rounded-full'>
-              <img src='https://media.discordapp.net/attachments/724220064223592541/1092840802721480804/user.jpg?width=662&height=662' alt='profileImage' className="rounded-full w-8 h-8 z-20"/>
+          {logged &&
+            <div className='friends flex items-center gap-3'>
+                <p className="text-textGray sm:text-gray50">Friends</p>
+                <i className="bi bi-people-fill text-pink5 text-lg"></i>
             </div>
-          </div>
+            
+          }
+          {
+            logged && 
+            <div className='profile flex items-center gap-3'>
+                <Link to={'/profile'} className="text-textGray sm:text-gray50">Your profile</Link>
+                <div className='border-2 border-pink5 rounded-full'>
+                  <img src='https://media.discordapp.net/attachments/724220064223592541/1092840802721480804/user.jpg?width=662&height=662' alt='profileImage' className="rounded-full w-8 h-8 z-20"/>
+                </div>
+            </div>
+          }
           <div className='settings flex items-center gap-3'>
             <p className='text-textGray sm:text-gray50'>Settings</p>
             <i className="bi bi-sliders text-lg text-pink5"></i>
