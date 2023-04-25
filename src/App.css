@@ -22,3 +22,19 @@ body{
     filter: brightness(0.8);
 }
   
+/* width */
+::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+  
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #818b90; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b30000; 
+  }
