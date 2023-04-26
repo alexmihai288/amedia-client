@@ -20,7 +20,7 @@ const Home = ({user,logged,token,setEditPost,posts}) => {
             {
               posts ?
               posts.map(post=>(
-                <div key={post._id} className='p-2 bg-white rounded-md h-fit '>
+                <div key={post._id} className='p-2 bg-white rounded-md h-[100%]'>
                   <Post {...post} user={user} token={token} logged={logged} setEditPost={setEditPost}/>
                 </div>
               ))

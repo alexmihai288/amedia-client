@@ -13,14 +13,14 @@ const Profile = ({user,posts,token,logged,setEditPost}) => {
     
     return (
     <div className='YourProfile bg-gray50 min-h-[100vh] flex font-Karla'>
-        <div className='leftSide bg-pink5 flex flex-col py-10 max-h-[100vh] px-5 whitespace-nowrap'>
-            <p className='font-medium tracking-tight text-3xl'><span className='text-purple15 font-bold'>W</span>elcome To Your Profile !</p>
+        <div className='leftSide bg-purple15 flex flex-col pb-5 pt-5 max-h-[100vh] px-5 whitespace-nowrap'>
+            <p className='font-medium tracking-tight text-3xl text-gray50'>Welcome To Your Profile !</p>
             <div className='profile&Names flex flex-col h-[100%] justify-center'>
                 <div className='flex flex-col gap-3 mb-auto mt-auto'>
                     <img src={photo} alt='profileImg' className='w-24 rounded-full object-cover mr-auto ml-auto'/>
                     <div className='text-sm text-preWhite ml-auto mr-auto flex flex-col text-center'>
-                            <p><span className='underline underline-offset-4 decoration-purple15'>username</span>: @{username}</p>
-                            <p><span className='underline underline-offset-4 decoration-purple15'>account created at</span>: {formattedDate}</p>
+                            <p><span className='underline underline-offset-4 decoration-pink5'>username</span>: @{username}</p>
+                            <p><span className='underline underline-offset-4 decoration-pink5'>account created at</span>: {formattedDate}</p>
                     </div>
                 </div>
                
@@ -41,14 +41,14 @@ const Profile = ({user,posts,token,logged,setEditPost}) => {
                     </div>
                 </div>
             </div>
-            <div className='T&C'>
-                <p className='text-xs text-center'>I Agree with <span className='text-purple15'>Terms and Conditions</span></p>
+            <div className='T&C text-gray50'>
+                <p className='text-xs text-center'>I Agree with <span className='text-[#3f9ee3]'>Terms and Conditions</span></p>
                 <p className='text-xs text-center'>© Copyright 2023</p>
             </div>
         </div>
         <div className='rightSide'>
-            <p className='font-bold text-center underline underline-offset-4 decoration-pink5 text-2xl bg-pink5 pt-5'>Your posts down here</p>
-            <div className='grid grid-cols-1 gap-10 sm:gap-8 sm:px-6 md:grid-cols-2 lg:px-8 lg:grid-cols-3 xl:px-10 py-5 max-h-[100vh] w-[100%] overflow-y-scroll'>
+            <p className='font-bold text-center underline underline-offset-8 decoration-pink5 text-2xl bg-purple15 pt-5 pb-5 text-pink5'>Your posts down here <span><i className="text-base bi bi-arrow-down text-preWhite"></i></span></p>
+            <div className='grid grid-cols-1 max-h-[calc(100vh-72px)] gap-10 sm:gap-8 sm:px-6 md:grid-cols-2 lg:px-8 lg:grid-cols-3 xl:px-10 py-5 w-[100%] overflow-y-scroll'>
                         {
                             usersPosts ?
                                 usersPosts.map(post=>

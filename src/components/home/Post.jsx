@@ -125,7 +125,7 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,l
 
 
   return (
-    <div className='post'>
+    <div className='post h-[100%] flex flex-col gap-3'>
       {logged ? <Link to={`/posts/${_id}`} className='postImage relative cursor-pointer'onClick={()=>setEditPost(false)} >
           <img src={imageUrl} alt='postImage' className='image w-full h-fit'/>
           <div className='absolute -top-5 -left-5 flex flex-col gap-1'>
@@ -142,9 +142,9 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,l
           </div>
         </div>  
       }
-        
-        <p className='text-sm ml-5'>{description}</p>
-        <div className='flex items-center justify-center text-lg px-4 mt-5'>
+        <div className="flex flex-col flex-1 gap-3">
+        <p className='text-sm ml-5 mb-auto mt-auto'>{description}</p>
+        <div className='flex items-center justify-center text-lg px-4'>
         {user._id===createdBy && <Link to={`/posts/${_id}`} className='bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto' onClick={()=>setEditPost(true)}>Edit</Link>}
           <div className='votes flex items-center gap-8 ml-auto mr-auto'>
             <div className='upVote flex items-center gap-1'>
@@ -206,6 +206,8 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,l
           </div>
           <i className="bi bi-share-fill text-base ml-auto"></i>
         </div>
+        </div>
+       
     </div>
   )
 }
