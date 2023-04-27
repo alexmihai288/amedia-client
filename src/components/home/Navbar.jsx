@@ -7,7 +7,7 @@ import axios from 'axios'
 import Rocket from '../../images/rocket.png'
 import DropDownNav from '../home/DropDownNav'
 
-const Navbar = ({user,logged,token,setCreatePostWindow}) => {
+const Navbar = ({user,logged,token,setCreatePostWindow,decodeByUserId,getAllPostsByUserId}) => {
 
   //showing or not showing the left side/dropdown
     const [showLeftSide,setShowLeftSide] = useState(false)
@@ -106,7 +106,7 @@ const Navbar = ({user,logged,token,setCreatePostWindow}) => {
                       users.length>0 &&
                         <div className='absolute left-0 right-0 ml-auto mr-auto -bottom-30 bg-gray50 z-20 overflow-y-scroll h-fit max-h-32 p-2 max-w-sm rounded-md flex flex-col gap-2'>
                           {
-                              users.map(user=><DropDownNav key={user._id} username={user.username} email={user.email} photo={user.photo} />)
+                              users.map(user=><DropDownNav key={user._id} id={user._id} username={user.username} email={user.email} photo={user.photo} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId}/>)
                           }
                         </div>
                   }

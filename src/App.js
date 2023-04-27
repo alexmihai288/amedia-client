@@ -8,6 +8,7 @@ import axios from "axios";
 import CreatePost from './components/home/CreatePost';
 import SinglePost from './components/home/SinglePost';
 import Profile from './components/profile/Profile';
+import UserProfile from './components/profile/UserProfile';
 
 
 function App() {
@@ -68,15 +69,47 @@ function App() {
   }, []);
 
 
+  const [searchedUser,setSearchedUser] = useState({}) 
+  const [searchedUserPosts,setSearchedUserPosts] = useState([])
+
+  async function decodeByUserId(id){
+    try{
+      const req = await axios.get(`/search/decodeByUserId/${id}`)
+      if(req.data.ok===true)
+        setSearchedUser(req.data.user)
+      else
+        setSearchedUser(`No user with id: ${id}`)
+      }catch(error){
+        searchedUser("Internal server error")
+        console.log(error)
+    }
+  }
+
+  async function getAllPostsByUserId(id){
+    try{
+      const req = await axios.get(`/posts/getAllPostsByUserId/${id}`)
+      if(req.data.ok===true)
+        setSearchedUserPosts(req.data.post)
+      else
+        setSearchedUserPosts("No posts yet !")
+      }catch(error){
+      setSearchedUserPosts("Internal server error")
+      console.log(error)
+    }
+  }
+
+
+
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home user={user} logged={logged} token={token} setEditPost={setEditPost} posts={posts}/>}/>
+        <Route path='/' element={<Home user={user} logged={logged} token={token} setEditPost={setEditPost} posts={posts} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId}/>}/>
         <Route path='/register' element={<Registering setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/>
         <Route path='/login' element={<Login setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/> 
         <Route path='/createPost' element={<CreatePost/>}/>
         <Route path='/posts/:id' element={<SinglePost token={token} user={user} EditPost={EditPost}/>} />
         <Route path='/profile' element={<Profile user={user} posts={posts} token={token} logged={logged} setEditPost={setEditPost}/>} />
+        <Route path='/profile/:id' element={<UserProfile searchedUser={searchedUser} searchedUserPosts={searchedUserPosts}/>}/>
       </Routes>
     </Router>
   );

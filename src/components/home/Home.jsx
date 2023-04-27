@@ -1,17 +1,17 @@
-import React, { useEffect ,useState} from 'react'
+import React, { useState} from 'react'
 import Navbar from './Navbar'
 import LeftSide  from './LeftSide'
 import Post from './Post'
 import CreatePost from './CreatePost'
 
-const Home = ({user,logged,token,setEditPost,posts}) => {
+const Home = ({user,logged,token,setEditPost,posts,decodeByUserId,getAllPostsByUserId}) => {
 
   const [CreatePostWindow,setCreatePostWindow] = useState(false)
 
   
   return (
     <div className='font-Karla bg-gray50 min-h-[100vh] flex flex-col'>
-      <Navbar user={user} logged={logged} token={token} setCreatePostWindow={setCreatePostWindow}/>
+      <Navbar user={user} logged={logged} token={token} setCreatePostWindow={setCreatePostWindow} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId}/>
       <div className='flex'>
         <div className='leftSide hidden sm:block min-w-fit h-[calc(100vh-80px)]'>
           <LeftSide setCreatePostWindow={setCreatePostWindow} logged={logged} posts={posts}/>
