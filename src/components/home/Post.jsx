@@ -129,7 +129,7 @@ const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,l
       {logged ? <Link to={`/posts/${_id}`} className='postImage relative cursor-pointer'onClick={()=>setEditPost(false)} >
           <img src={imageUrl} alt='postImage' className='image w-full h-fit'/>
           <div className='absolute -top-5 -left-5 flex flex-col gap-1'>
-            <img src={profileImage? profileImage : 'loading'} alt='profileImage' className='w-8 rounded-full'/>
+            <img src={profileImage? profileImage : 'loading'} alt='profileImage' className='w-8 h-8 rounded-full'/>
             <p className='ml-8 postUser text-xs text-white'>@{username} {user._id===createdBy ?<span className='text-textGray'>(you)</span>: ''}</p>
           </div>
         </Link>

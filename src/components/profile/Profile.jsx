@@ -10,7 +10,6 @@ const Profile = ({user,posts,token,logged,setEditPost}) => {
      const formattedDate = createdAtDate.toISOString().slice(0,10)
     //count how many posts user has
     const usersPosts = posts.filter(post=>post.createdBy===user._id)
-    
     return (
     <div className='YourProfile bg-gray50 min-h-[100vh] flex font-Karla'>
         <div className='leftSide bg-purple15 flex flex-col pb-5 pt-5 max-h-[100vh] px-5 whitespace-nowrap'>
@@ -46,7 +45,7 @@ const Profile = ({user,posts,token,logged,setEditPost}) => {
                 <p className='text-xs text-center'>© Copyright 2023</p>
             </div>
         </div>
-        <div className='rightSide'>
+        {usersPosts.length>0 ? <div className='rightSide'>
             <p className='font-bold text-center underline underline-offset-8 decoration-pink5 text-2xl bg-purple15 pt-5 pb-5 text-pink5'>Your posts down here <span><i className="text-base bi bi-arrow-down text-preWhite"></i></span></p>
             <div className='grid grid-cols-1 max-h-[calc(100vh-72px)] gap-10 sm:gap-8 sm:px-6 md:grid-cols-2 lg:px-8 lg:grid-cols-3 xl:px-10 py-5 w-[100%] overflow-y-scroll'>
                         {
@@ -61,6 +60,10 @@ const Profile = ({user,posts,token,logged,setEditPost}) => {
                         }            
             </div>
         </div>
+        :
+        <p>No posts yet !</p>    
+    }
+        
         
     </div>
   )

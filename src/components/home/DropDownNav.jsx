@@ -16,7 +16,7 @@ const DropDownNav = ({id,username,email,photo,decodeByUserId,getAllPostsByUserId
           getAllPostsByUserId(id)
           setInterval(() => {
             navigate(`/profile/${id}`)
-          }, 1200);
+          }, 200);
         }}>View Profile</button>
     </div>
   )

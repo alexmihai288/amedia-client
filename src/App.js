@@ -43,6 +43,7 @@ function App() {
       })
       if(req.data.ok===true){
         setUser(req.data.targetUser);
+        console.log(user)
         setLogged(true)
       }
     }catch(err){
@@ -98,6 +99,7 @@ function App() {
     }
   }
 
+  console.log(user.photo)
 
 
   return (

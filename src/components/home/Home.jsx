@@ -14,7 +14,7 @@ const Home = ({user,logged,token,setEditPost,posts,decodeByUserId,getAllPostsByU
       <Navbar user={user} logged={logged} token={token} setCreatePostWindow={setCreatePostWindow} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId}/>
       <div className='flex'>
         <div className='leftSide hidden sm:block min-w-fit h-[calc(100vh-80px)]'>
-          <LeftSide setCreatePostWindow={setCreatePostWindow} logged={logged} posts={posts}/>
+          <LeftSide setCreatePostWindow={setCreatePostWindow} logged={logged} posts={posts} userPhoto={user.photo}/>
         </div>
           <div className='overflow-y-scroll max-h-[calc(100vh-80px)] w-[100%] grid grid-cols-1 p-10 gap-10 sm:gap-8 sm:p-8 md:grid-cols-2 lg:p-10 lg:grid-cols-3 xl:p-14 h-fit'>
             {

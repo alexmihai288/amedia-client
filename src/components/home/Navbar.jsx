@@ -66,6 +66,8 @@ const Navbar = ({user,logged,token,setCreatePostWindow,decodeByUserId,getAllPost
       }
     }
     
+    console.log(user.username)
+    console.log(user.photo)
   return (
     <div className='bg-purple15'>
         <div className='px-5 py-3 sm:px-7 sm:py-5 flex items-center justify-between max-w-[1800px] ml-auto mr-auto'>
@@ -128,7 +130,7 @@ const Navbar = ({user,logged,token,setCreatePostWindow,decodeByUserId,getAllPost
                   <i className="bi bi-people-fill text-white text-lg"></i>
               </div>
               <div className='profile hover:scale-105 active:scale-95 relative' onClick={SideFunction}>
-                  <img src={user.photo} alt='profileImage' className="object-cover rounded-full w-8 z-20"/>
+                  <img src={user.photo} alt='profileImage' className="object-cover rounded-full w-8 h-8 z-20"/>
                   <div className='absolute -bottom-3 -right-2'>
                       <i className="bi bi-caret-down-fill text-pink5"></i>
                   </div>

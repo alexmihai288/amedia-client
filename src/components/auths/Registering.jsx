@@ -13,6 +13,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
     lastName: "",
     email: "",
     password: "",
+    photo:""
   });
   
   async function register(e) {
@@ -33,6 +34,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
           lastName: controller.lastName,
           email: controller.email,
           password: controller.password,
+          photo: controller.photo
         });
         setStatus(req.data.msg);
       } catch (error) {
@@ -61,6 +63,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
       lastName: "",
       email: "",
       password: "",
+      photo:""
     });
     setStatus("");
   }
@@ -125,7 +128,16 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
                   <p>Username will be visible online</p>
                 </div>
                 <div className="photo sm:flex sm:justify-between sm:items-center mt-4 ml-3 mb-[2px]">
-                  <input id="photo" className="outline-none text-xs border-b border-b-textGray placeholder-pink5" placeholder="image URL"/>
+                  <input id="photo" className="outline-none text-xs border-b border-b-textGray placeholder-pink5" placeholder="image URL" onChange={(e)=>{
+                    setController((prevState)=>{
+                      return{
+                        ...prevState,
+                        photo:e.target.value
+                      }
+                    })
+                  }} 
+                  value={controller.photo}
+                  />
                   <label htmlFor="photo" className="text-xs hidden sm:block">Choose your profile image</label>
                 </div>
                 <div className="alert flex items-center gap-1 text-xs ml-3">
