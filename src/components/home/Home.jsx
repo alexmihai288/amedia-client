@@ -8,7 +8,7 @@ const Home = ({user,logged,token,setEditPost,posts,decodeByUserId,getAllPostsByU
 
   const [CreatePostWindow,setCreatePostWindow] = useState(false)
 
-  
+
   return (
     <div className='font-Karla bg-gray50 min-h-[100vh] flex flex-col'>
       <Navbar user={user} logged={logged} token={token} setCreatePostWindow={setCreatePostWindow} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId}/>
@@ -20,7 +20,7 @@ const Home = ({user,logged,token,setEditPost,posts,decodeByUserId,getAllPostsByU
             {
               posts ?
               posts.map(post=>(
-                <div key={post._id} className='p-2 bg-white rounded-md h-[100%]'>
+                <div key={post._id} className='p-2 bg-white rounded-md h-fit'>
                   <Post {...post} user={user} token={token} logged={logged} setEditPost={setEditPost}/>
                 </div>
               ))

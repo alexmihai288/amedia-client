@@ -27,14 +27,17 @@ body{
     width: 0.4rem;
   }
   
+::-webkit-scrollbar{
+    height: 0.3rem;
+  }
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #818b90; 
+    background: #6d7579; 
     border-radius: 10px;
   }
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: #b30000; 
+    background: #8e999f; 
   }

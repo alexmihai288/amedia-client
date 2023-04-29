@@ -16,7 +16,7 @@ const Profile = ({user,posts,token,logged,setEditPost}) => {
             <p className='font-medium tracking-tight text-3xl text-gray50'>Welcome To Your Profile !</p>
             <div className='profile&Names flex flex-col h-[100%] justify-center'>
                 <div className='flex flex-col gap-3 mb-auto mt-auto'>
-                    <img src={photo} alt='profileImg' className='w-24 rounded-full object-cover mr-auto ml-auto'/>
+                    <img src={photo} alt='profileImg' className='w-28 h-28 rounded-full object-cover mr-auto ml-auto'/>
                     <div className='text-sm text-preWhite ml-auto mr-auto flex flex-col text-center'>
                             <p><span className='underline underline-offset-4 decoration-pink5'>username</span>: @{username}</p>
                             <p><span className='underline underline-offset-4 decoration-pink5'>account created at</span>: {formattedDate}</p>

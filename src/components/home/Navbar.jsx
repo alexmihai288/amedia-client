@@ -65,9 +65,6 @@ const Navbar = ({user,logged,token,setCreatePostWindow,decodeByUserId,getAllPost
         console.log(error)
       }
     }
-    
-    console.log(user.username)
-    console.log(user.photo)
   return (
     <div className='bg-purple15'>
         <div className='px-5 py-3 sm:px-7 sm:py-5 flex items-center justify-between max-w-[1800px] ml-auto mr-auto'>

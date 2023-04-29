@@ -34,7 +34,7 @@ const Registering = ({setStatus,status,isNotEmpty,showPassword,setShowPassword }
           lastName: controller.lastName,
           email: controller.email,
           password: controller.password,
-          photo: controller.photo
+          photo: controller.photo==="" ? "https://cdn.discordapp.com/attachments/724220064223592541/1092840802721480804/user.jpg" :controller.photo
         });
         setStatus(req.data.msg);
       } catch (error) {

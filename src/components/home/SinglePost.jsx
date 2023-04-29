@@ -406,7 +406,7 @@ const SinglePost = ({ token, user,EditPost}) => {
                   handleComment()
                   setTimeout(() => {
                     commentInput.current.value=''
-                  }, 1000);
+                  }, 500);
                   }} className="postComment bg-[#3f9ee3] text-sm text-white tracking-tighter px-2 py-0.5 rounded-full">Comment</button>
               </div>
               {EditPost && <i className="bi bi-x text-red-700 ml-auto mr-5 cursor-pointer -top-1.5 -right-5 absolute hidden sm:block" onClick={()=>{
