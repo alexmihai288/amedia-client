@@ -8,7 +8,6 @@ const Home = ({user,logged,token,setEditPost,posts,decodeByUserId,getAllPostsByU
 
   const [CreatePostWindow,setCreatePostWindow] = useState(false)
 
-
   return (
     <div className='font-Karla bg-gray50 min-h-[100vh] flex flex-col'>
       <Navbar user={user} logged={logged} token={token} setCreatePostWindow={setCreatePostWindow} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId}/>

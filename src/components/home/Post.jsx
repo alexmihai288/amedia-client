@@ -13,7 +13,7 @@ const Post = ({
   user,
   token,
   logged,
-  setEditPost,
+  setEditPost
 }) => {
   const [username, setUsername] = useState();
   const [profileImage, setProfileImage] = useState();
@@ -183,7 +183,7 @@ const Post = ({
       <div className="flex flex-col flex-1 gap-3 h-fit">
         <p className="text-sm ml-5 h-fit overflow-x-auto descScroll">{description}</p>
         <div className="flex items-center justify-center text-lg px-4">
-          {user._id === createdBy && (
+          {user._id === createdBy(
             <Link
               to={`/posts/${_id}`}
               className="bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto"

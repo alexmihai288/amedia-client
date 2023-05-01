@@ -3,7 +3,7 @@ import Post from '../home/Post'
 import moment from 'moment'
 
 const Profile = ({user,posts,token,logged,setEditPost}) => {
-    const {username,firstName,lastName,email,password,photo,createdAt} = user
+    const {username,firstName,lastName,email,password,photo,createdAt,userEditButton} = user
      // Use moment.js to parse the createdAt value and convert it to UTC
      const createdAtDate = moment.utc(createdAt).toDate()
      // Format the date as YYYY-MM-DD

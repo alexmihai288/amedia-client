@@ -242,8 +242,8 @@ const SinglePost = ({ token, user,EditPost}) => {
           <div className="flex flex-col sm:flex-row gap-1">
             <div className="post bg-white p-2 rounded-tl-md rounded-bl-md relative">
               <img src={post.imageUrl} alt="postImage" className="rounded-md object-cover h-96 sm:max-h-[850px]" />
-              <div className="flex items-center gap-2 mt-1 relative">
-                <p className="text-sm ml-5">{post.description}</p>
+              <div className="flex items-center gap-2 mt-1 relative w-full">
+                <p className="text-sm ml-5 flex-1 max-w-[250px] overflow-x-scroll">{post.description}</p>
                 {EditPost && 
                   <button className="bg-pink5 text-white text-xs px-1 py-1 rounded-lg tracking-tighter" onClick={()=>setDescriptionWnd(true)}>Edit description</button> 
                 }
