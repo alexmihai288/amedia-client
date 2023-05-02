@@ -2,7 +2,7 @@ import React from 'react'
 import Post from '../home/Post'
 import moment from 'moment'
 
-const Profile = ({user,posts,token,logged,setEditPost}) => {
+const Profile = ({user,posts,token,logged,setEditPost,userLogged}) => {
     const {username,firstName,lastName,email,password,photo,createdAt,userEditButton} = user
      // Use moment.js to parse the createdAt value and convert it to UTC
      const createdAtDate = moment.utc(createdAt).toDate()
@@ -52,7 +52,7 @@ const Profile = ({user,posts,token,logged,setEditPost}) => {
                             usersPosts ?
                                 usersPosts.map(post=>
                                     <div className='p-2 bg-preWhite rounded-md'>
-                                        <Post {...post} user={user} token={token} logged={logged} setEditPost={setEditPost}/>
+                                        <Post {...post} user={user} token={token} logged={logged} setEditPost={setEditPost} userLogged={userLogged}/>
                                     </div>
                                 )
                             : 

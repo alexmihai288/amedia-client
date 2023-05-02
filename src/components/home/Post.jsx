@@ -3,18 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const Post = ({
-  description,
-  imageUrl,
-  createdBy,
-  upVotes,
-  downVotes,
-  _id,
-  user,
-  token,
-  logged,
-  setEditPost
-}) => {
+const Post = ({description,imageUrl,createdBy,upVotes,downVotes,_id,user,token,logged,setEditPost,userLogged}) => {
   const [username, setUsername] = useState();
   const [profileImage, setProfileImage] = useState();
 
@@ -159,11 +148,11 @@ const Post = ({
             />
             <p className="ml-8 postUser text-xs text-white">
               @{username}{" "}
-              {user._id === createdBy ? (
+              {user._id === createdBy ? 
                 <span className="text-textGray">(you)</span>
-              ) : (
+               : 
                 ""
-              )}
+              }
             </p>
           </div>
         </Link>
@@ -183,7 +172,7 @@ const Post = ({
       <div className="flex flex-col flex-1 gap-3 h-fit">
         <p className="text-sm ml-5 h-fit overflow-x-auto descScroll">{description}</p>
         <div className="flex items-center justify-center text-lg px-4">
-          {user._id === createdBy(
+          {user._id === createdBy && user._id===userLogged._id ?
             <Link
               to={`/posts/${_id}`}
               className="bg-[#3f9ee3] text-sm px-2 py-0.5 rounded-full text-white tracking-tighter mr-auto"
@@ -191,7 +180,9 @@ const Post = ({
             >
               Edit
             </Link>
-          )}
+            :
+            ""
+          }
           <div className="votes flex items-center gap-8 ml-auto mr-auto">
             <div className="upVote flex items-center gap-1">
               {logged ? (

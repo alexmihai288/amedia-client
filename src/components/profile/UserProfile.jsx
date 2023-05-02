@@ -2,9 +2,9 @@ import React from 'react'
 import moment from 'moment'
 import Post from '../home/Post'
 
-const UserProfile = ({searchedUser,searchedUserPosts,token,logged,setEditPost}) => {
+const UserProfile = ({searchedUser,searchedUserPosts,token,logged,setEditPost,user}) => {
 
-    const {username,firstName,lastName,email,password,photo,createdAt} = searchedUser
+    const {username,firstName,lastName,email,password,photo,createdAt,_id} = searchedUser
      // Use moment.js to parse the createdAt value and convert it to UTC
      const createdAtDate = moment.utc(createdAt).toDate()
      // Format the date as YYYY-MM-DD
@@ -21,6 +21,7 @@ const UserProfile = ({searchedUser,searchedUserPosts,token,logged,setEditPost}) 
                     <div className='text-sm text-preWhite ml-auto mr-auto flex flex-col text-center'>
                             <p><span className='underline underline-offset-4 decoration-pink5'>username</span>: @{username}</p>
                             <p><span className='underline underline-offset-4 decoration-pink5'>account created at</span>: {formattedDate}</p>
+                            {user._id !==searchedUser._id ? <button className='addFriend bg-pink5 self-center px-2 py-1 rounded-md mt-3 active:scale-95 duration-75'>Add Friend</button> : ""}
                     </div>
                 </div>
                
@@ -53,7 +54,7 @@ const UserProfile = ({searchedUser,searchedUserPosts,token,logged,setEditPost}) 
                             usersPosts ?
                                 usersPosts.map(post=>
                                     <div className='p-2 bg-preWhite rounded-md'>
-                                        <Post {...post} user={searchedUser} token={token} logged={logged} setEditPost={setEditPost}/>
+                                        <Post {...post} user={searchedUser} token={token} logged={logged} setEditPost={setEditPost} userLogged={user}/>
                                     </div>
                                 )
                             : 
