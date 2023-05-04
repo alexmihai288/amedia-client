@@ -7,7 +7,7 @@ import CreatePost from './CreatePost'
 const Home = ({user,logged,token,setEditPost,posts,decodeByUserId,getAllPostsByUserId}) => {
 
   const [CreatePostWindow,setCreatePostWindow] = useState(false)
-
+  console.log(user)
   return (
     <div className='font-Karla bg-gray50 min-h-[100vh] flex flex-col'>
       <Navbar user={user} logged={logged} token={token} setCreatePostWindow={setCreatePostWindow} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId}/>

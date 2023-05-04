@@ -1,16 +1,63 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import Post from '../home/Post'
+import axios from 'axios'
 
 const UserProfile = ({searchedUser,searchedUserPosts,token,logged,setEditPost,user}) => {
 
-    const {username,firstName,lastName,email,password,photo,createdAt,_id} = searchedUser
+    const {username,photo,createdAt,_id,friendsRequest} = searchedUser
      // Use moment.js to parse the createdAt value and convert it to UTC
      const createdAtDate = moment.utc(createdAt).toDate()
      // Format the date as YYYY-MM-DD
      const formattedDate = createdAtDate.toISOString().slice(0,10)
     //count how many posts user has
     const usersPosts = searchedUserPosts.filter(post=>post.createdBy===searchedUser._id)
+    
+
+    const [friendsRequestState,setfriendsRequestState] = useState(friendsRequest ?? [])
+    const [clicked,setClicked] = useState(false)
+    const [message,setMessage] = useState('')
+
+    const handleFriendRequests=()=>{
+        setfriendsRequestState(prevState=>{
+            return [...prevState,user._id]
+        })
+        setClicked(true)
+    }
+
+    const clearing = ()=>{
+        setMessage('')
+    }
+    const updateFriendRequest= async()=>{
+        try{
+            setMessage('Sending friend request...')
+            const req = await axios.patch(`/user/${_id}`,{friendsRequest:[...friendsRequestState]},
+                {
+                    headers: {
+                    authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            setMessage('Friend request succeded !')
+
+            setTimeout(() => {
+                clearing()
+            }, 500);
+            console.log(req)
+        }catch(error){
+            console.log(error)
+            setMessage('Internal server error')
+        }
+    }
+
+    useEffect(()=>{
+        if(clicked===true)
+        {
+            updateFriendRequest()
+        }
+    },[clicked])
+   
+
     return (
     <div className='YourProfile bg-gray50 min-h-[100vh] flex font-Karla'>
         <div className='leftSide bg-purple15 flex flex-col pb-5 pt-5 max-h-[100vh] px-5 whitespace-nowrap'>
@@ -21,7 +68,8 @@ const UserProfile = ({searchedUser,searchedUserPosts,token,logged,setEditPost,us
                     <div className='text-sm text-preWhite ml-auto mr-auto flex flex-col text-center'>
                             <p><span className='underline underline-offset-4 decoration-pink5'>username</span>: @{username}</p>
                             <p><span className='underline underline-offset-4 decoration-pink5'>account created at</span>: {formattedDate}</p>
-                            {user._id !==searchedUser._id ? <button className='addFriend bg-pink5 self-center px-2 py-1 rounded-md mt-3 active:scale-95 duration-75'>Add Friend</button> : ""}
+                            {user._id !==searchedUser._id ? <button className='addFriend bg-pink5 self-center px-2 py-1 rounded-md mt-3 active:scale-95 duration-75' onClick={()=>handleFriendRequests()}>Add Friend</button> : ""}
+                            <p>{message}</p>
                     </div>
                 </div>
                

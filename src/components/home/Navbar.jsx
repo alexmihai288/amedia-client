@@ -144,8 +144,9 @@ const Navbar = ({user,logged,token,setCreatePostWindow,decodeByUserId,getAllPost
 
         {logged === true ? (
           <div className="hidden features sm:flex sm:items-center sm:gap-10 ml-5 relative">
-            <div className="hidden sm:flex sm:items-center gap-5 mr-auto">
-              <i className="bi bi-people-fill text-white text-lg"></i>
+            <div className="hidden sm:flex sm:items-center gap-5 mr-auto relative">
+              <i class="bi bi-bell-fill text-lg text-white"></i>            
+              {user.friendsRequest.length>0 ? <div className="notification absolute -bottom-1 -right-2 bg-red-700 text-white rounded-full text-xs flex justify-center items-center w-4 h-4">{user.friendsRequest.length}</div>: ""}
             </div>
             <div
               className="profile hover:scale-105 active:scale-95 relative"
