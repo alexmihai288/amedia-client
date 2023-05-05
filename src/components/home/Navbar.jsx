@@ -6,23 +6,33 @@ import DropDown from "./DropDown";
 import axios from "axios";
 import Rocket from "../../images/rocket.png";
 import DropDownNav from "../home/DropDownNav";
+import FriendReqs from "./FriendReqs";
 
 const Navbar = ({user,logged,token,setCreatePostWindow,decodeByUserId,getAllPostsByUserId,}) => {
   //showing or not showing the left side/dropdown
   const [showLeftSide, setShowLeftSide] = useState(false);
   const [showDropDown, setDropDown] = useState(false);
+  const [notDiv,setNotDiv] = useState(false)
+
+
   function SideFunction() {
     setShowLeftSide(true);
-    setDropDown(true);
+    setDropDown(prevState=>!prevState);
   }
   const LeftDiv = useRef(null);
   const dropDown = useRef(null);
+  const notification = useRef(null)
+
   const handleClickOutside = (event) => {
     if (LeftDiv.current && !LeftDiv.current.contains(event.target)) {
       setShowLeftSide(false);
     }
     if (dropDown.current && !dropDown.current.contains(event.target)) {
       setDropDown(false);
+    }
+    if(notification.current && !notification.current.contains(event.target))
+    {
+      setNotDiv(false)
     }
   };
   useEffect(() => {
@@ -62,6 +72,7 @@ const Navbar = ({user,logged,token,setCreatePostWindow,decodeByUserId,getAllPost
       console.log(error);
     }
   }
+
   return (
     <div className="bg-purple15">
       <div className="px-5 py-3 sm:px-7 sm:py-5 flex items-center justify-between max-w-[1800px] ml-auto mr-auto">
@@ -145,8 +156,13 @@ const Navbar = ({user,logged,token,setCreatePostWindow,decodeByUserId,getAllPost
         {logged === true ? (
           <div className="hidden features sm:flex sm:items-center sm:gap-10 ml-5 relative">
             <div className="hidden sm:flex sm:items-center gap-5 mr-auto relative">
-              <i class="bi bi-bell-fill text-lg text-white"></i>            
-              {user.friendsRequest.length>0 ? <div className="notification absolute -bottom-1 -right-2 bg-red-700 text-white rounded-full text-xs flex justify-center items-center w-4 h-4">{user.friendsRequest.length}</div>: ""}
+              <i className="bi bi-bell-fill text-lg text-white" onClick={()=>setNotDiv(prevState=>!prevState)}></i>            
+              {user.friendsRequest.length>0 ? <div className="notification absolute -bottom-1 -right-2 bg-red-700 text-white rounded-full text-xs flex justify-center items-center w-4 h-4" onClick={()=>setNotDiv(prevState=>!prevState)}>{user.friendsRequest.length}</div>: ""}
+              {notDiv && 
+                <div className="notDiv absolute max-h-32 overflow-y-scroll -bottom-32 -left-60 w-80 bg-preWhite z-10 px-3 py-2 rounded-md" ref={notification}>
+                  <FriendReqs friendsRequest={user.friendsRequest} />
+                </div>
+              }
             </div>
             <div
               className="profile hover:scale-105 active:scale-95 relative"
