@@ -12,9 +12,7 @@ const Navbar = ({
   user,
   logged,
   token,
-  setCreatePostWindow,
-  decodeByUserId,
-  getAllPostsByUserId,
+  setCreatePostWindow
 }) => {
   //showing or not showing the left side/dropdown
   const [showLeftSide, setShowLeftSide] = useState(false);
@@ -142,8 +140,6 @@ const Navbar = ({
                     username={user.username}
                     email={user.email}
                     photo={user.photo}
-                    decodeByUserId={decodeByUserId}
-                    getAllPostsByUserId={getAllPostsByUserId}
                   />
                 ))}
               </div>

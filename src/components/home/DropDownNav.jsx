@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const DropDownNav = ({id,username,email,photo,decodeByUserId,getAllPostsByUserId}) => {
+const DropDownNav = ({id,username,email,photo}) => {
   const navigate = useNavigate()
 
   return (
@@ -12,8 +12,6 @@ const DropDownNav = ({id,username,email,photo,decodeByUserId,getAllPostsByUserId
         </div>
         <p className='text-xs text-textGray'>{email}</p>
         <button className='bg-pink5 text-preWhite self-end px-3 py-1 rounded-md text-sm' onClick={()=>{
-          decodeByUserId(id)
-          getAllPostsByUserId(id)
           setTimeout(() => {
             navigate(`/profile/${id}`)
           }, 200);

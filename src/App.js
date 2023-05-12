@@ -102,13 +102,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home user={user} logged={logged} token={token} setEditPost={setEditPost} posts={posts} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId} userLogged={user}/>}/>
+        <Route path='/' element={<Home user={user} logged={logged} token={token} setEditPost={setEditPost} posts={posts} userLogged={user}/>}/>
         <Route path='/register' element={<Registering setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/>
         <Route path='/login' element={<Login setStatus={setStatus} status={status} isNotEmpty={isNotEmpty} showPassword={showPassword} setShowPassword={setShowPassword}/>}/> 
         <Route path='/createPost' element={<CreatePost/>}/>
         <Route path='/posts/:id' element={<SinglePost token={token} user={user} EditPost={EditPost}/>} />
         <Route path='/profile' element={<Profile user={user} posts={posts} token={token} logged={logged} setEditPost={setEditPost} userLogged={user}/>} />
-        <Route path='/profile/:id' element={<UserProfile searchedUser={searchedUser} searchedUserPosts={searchedUserPosts} token={token} logged={logged} setEditPost={setEditPost} user={user}/>}/>
+        <Route path='/profile/:id' element={<UserProfile token={token} logged={logged} setEditPost={setEditPost} user={user}/>}/>
       </Routes>
     </Router>
   );
