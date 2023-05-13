@@ -93,7 +93,9 @@ const UserProfile = ({token,logged,setEditPost,user}) => {
         }
     },[clicked])
    
-        const friendReqSent = friendsRequest?.filter(frdReq=>frdReq===user._id)
+    const friendReqSent = friendsRequest?.filter(frdReq=>frdReq===user._id)
+
+
     return (
     <div className='YourProfile bg-gray50 min-h-[100vh] flex font-Karla'>
         <div className='leftSide bg-purple15 flex flex-col pb-5 pt-5 max-h-[100vh] px-5 whitespace-nowrap'>
@@ -104,7 +106,7 @@ const UserProfile = ({token,logged,setEditPost,user}) => {
                     <div className='text-sm text-preWhite ml-auto mr-auto flex flex-col text-center'>
                             <p><span className='underline underline-offset-4 decoration-pink5'>username</span>: @{username}</p>
                             <p><span className='underline underline-offset-4 decoration-pink5'>account created at</span>: {formattedDate}</p>
-                            { ok===true || friendReqSent?.length>0 ? <button className='addFriend bg-textGray text-gray50 self-center px-2 py-1 rounded-md mt-3'>Friend request was sent !</button> : user._id !==searchedUser._id ? <button className='addFriend bg-pink5 self-center px-2 py-1 rounded-md mt-3 active:scale-95 duration-75' onClick={()=>handleFriendRequests()}>Add Friend</button> : ""}
+                            { user?.friends?.includes(searchedUserID.id) ? <div className='friends bg-green-700 text-gray50 self-center px-2 py-1 rounded-md mt-3'>Friends <i className="bi bi-check-lg"></i></div> : ok===true || friendReqSent?.length>0 ? <button className='addFriend bg-textGray text-gray50 self-center px-2 py-1 rounded-md mt-3'>Friend request was sent !</button> : user._id !==searchedUser._id ? <button className='addFriend bg-pink5 self-center px-2 py-1 rounded-md mt-3 active:scale-95 duration-75' onClick={()=>handleFriendRequests()}>Add Friend</button> : ""}
                             <p>{message}</p>
                     </div>
                 </div>

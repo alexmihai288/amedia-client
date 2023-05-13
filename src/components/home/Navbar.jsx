@@ -176,7 +176,7 @@ const Navbar = ({
                   className="notDiv fixed max-h-32 overflow-y-scroll top-10 right-10 w-fit bg-preWhite z-10 px-3 py-2 rounded-md"
                   ref={notification}
                 >
-                  {user?.friendsRequest?.length>0 ?  <FriendReqs friendsRequest={user.friendsRequest} /> : <p className="text-sm text-textGray">No friend requests !</p>}
+                  {user?.friendsRequest?.length>0 ? user.friendsRequest.map(frdReq=><FriendReqs searchedUser={frdReq} token={token} user={user}/>)  : <p className="text-sm text-textGray">No friend requests !</p>}
                 </div>
               )}
             </div>
