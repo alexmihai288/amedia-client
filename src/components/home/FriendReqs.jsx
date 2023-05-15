@@ -32,6 +32,7 @@ const FriendReqs = ({user,token,searchedUser}) => {
       
       useEffect(() => {
         decodeAllFriendsRequests()
+        decodeByUserId(searchedUser)
       }, [])
 
 
@@ -39,9 +40,27 @@ const FriendReqs = ({user,token,searchedUser}) => {
     let afterAccept = []
     const [friendState,setFriendsState] = useState(user.friends || [])
     const [OktoAccept,setOktoAccept] = useState(false)
+    const [searchedUser2,setSearchedUser2] = useState({}) 
+    async function decodeByUserId(id){
+      try{
+        const req = await axios.get(`/search/decodeByUserId/${id}`)
+        if(req.data.ok===true)
+          setSearchedUser2(req.data.user)
+        else
+          setSearchedUser2(`No user with id: ${id}`)
+        }catch(error){
+          searchedUser("Internal server error")
+          console.log(error)
+      }
+    }
+    const [addedFriends,setAddedFriends] =  useState(searchedUser2.friends || [])
+
     const handleAcceptFriendRequest = ()=>{
         setFriendsState(prevState=>{
             return [...prevState,searchedUser]
+        })
+        setAddedFriends(prevState=>{
+          return [...prevState, user._id]
         })
         if(user.friendsRequest){
           afterAccept = user.friendsRequest.filter(frdReq=>frdReq!==searchedUser)
@@ -52,6 +71,10 @@ const FriendReqs = ({user,token,searchedUser}) => {
     useEffect(()=>{
         if(OktoAccept===true){
             AcceptFriendRequest()
+            AcceptFriendRequest2()
+            setTimeout(() => {
+              window.location.reload()
+            }, 300);
         }
     },[OktoAccept])
 
@@ -73,14 +96,29 @@ const FriendReqs = ({user,token,searchedUser}) => {
                     },
                 }
             )
-            if(req.data.ok===true)
-            {
-              updateFriendsReq()
-            }
         }catch(error){
            console.log(error) 
         }
     }
+
+    const AcceptFriendRequest2= async()=>{
+      try{
+          const req = await axios.patch(`user/me/${searchedUser}`,{friends:[...addedFriends]},
+              {
+                  headers: {
+                  authorization: `Bearer ${token}`,
+                  },
+              }
+          )
+          if(req.data.ok===true)
+          {
+            updateFriendsReq()
+          }
+      }catch(error){
+         console.log(error) 
+      }
+  }
+
 
     return(
         <div className='flex flex-col gap-3'>

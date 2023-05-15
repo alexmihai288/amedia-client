@@ -115,7 +115,7 @@ const UserProfile = ({token,logged,setEditPost,user}) => {
                     <div className='totalFriends flex items-center text-preWhite gap-2.5'>
                         <p className='mr-auto tracking-tighter'>Friends</p>
                         <div className='flex items-center gap-2 ml-auto'>
-                            <p className='ml-auto'>14</p> 
+                            <p className='ml-auto'>{searchedUser.friends.length}</p> 
                             <i className="bi bi-people-fill text-lg"></i>
                         </div>
                     </div>
@@ -139,7 +139,7 @@ const UserProfile = ({token,logged,setEditPost,user}) => {
                         {
                             searchedUserPosts ?
                                 searchedUserPosts.map(post=>
-                                    <div className='p-2 bg-preWhite rounded-md'>
+                                    <div key={post._id} className='p-2 bg-preWhite rounded-md'>
                                         <Post {...post} user={searchedUser} token={token} logged={logged} setEditPost={setEditPost} userLogged={user}/>
                                     </div>
                                 )

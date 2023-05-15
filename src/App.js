@@ -68,37 +68,7 @@ function App() {
     getAllPosts();
   }, []);
 
-
-  const [searchedUser,setSearchedUser] = useState({}) 
-  const [searchedUserPosts,setSearchedUserPosts] = useState([])
-
-  async function decodeByUserId(id){
-    try{
-      const req = await axios.get(`/search/decodeByUserId/${id}`)
-      if(req.data.ok===true)
-        setSearchedUser(req.data.user)
-      else
-        setSearchedUser(`No user with id: ${id}`)
-      }catch(error){
-        searchedUser("Internal server error")
-        console.log(error)
-    }
-  }
-
-  async function getAllPostsByUserId(id){
-    try{
-      const req = await axios.get(`/posts/getAllPostsByUserId/${id}`)
-      if(req.data.ok===true)
-        setSearchedUserPosts(req.data.post)
-      else
-        setSearchedUserPosts("No posts yet !")
-      }catch(error){
-      setSearchedUserPosts("Internal server error")
-      console.log(error)
-    }
-  }
-
-
+  
   return (
     <Router>
       <Routes>

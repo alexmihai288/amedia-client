@@ -4,13 +4,12 @@ import LeftSide  from './LeftSide'
 import Post from './Post'
 import CreatePost from './CreatePost'
 
-const Home = ({user,logged,token,setEditPost,posts,decodeByUserId,getAllPostsByUserId}) => {
+const Home = ({user,logged,token,setEditPost,posts}) => {
 
   const [CreatePostWindow,setCreatePostWindow] = useState(false)
-  console.log(user)
   return (
     <div className='font-Karla bg-gray50 min-h-[100vh] flex flex-col'>
-      <Navbar user={user} logged={logged} token={token} setCreatePostWindow={setCreatePostWindow} decodeByUserId={decodeByUserId} getAllPostsByUserId={getAllPostsByUserId}/>
+      <Navbar user={user} logged={logged} token={token} setCreatePostWindow={setCreatePostWindow}/>
       <div className='flex'>
         <div className='leftSide hidden sm:block min-w-fit h-[calc(100vh-80px)]'>
           <LeftSide setCreatePostWindow={setCreatePostWindow} logged={logged} posts={posts} userPhoto={user.photo}/>
