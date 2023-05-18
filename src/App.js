@@ -10,7 +10,6 @@ import SinglePost from './components/home/SinglePost';
 import Profile from './components/profile/Profile';
 import UserProfile from './components/profile/UserProfile';
 
-
 function App() {
   
   const [EditPost,setEditPost] = useState(false)

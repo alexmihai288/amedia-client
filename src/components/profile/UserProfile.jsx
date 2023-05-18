@@ -97,12 +97,12 @@ const UserProfile = ({token,logged,setEditPost,user}) => {
 
 
     return (
-    <div className='YourProfile bg-gray50 min-h-[100vh] flex font-Karla'>
+    <div className='YourProfile bg-gray50 min-h-[100vh] flex flex-col md:flex-row font-Karla'>
         <div className='leftSide bg-purple15 flex flex-col pb-5 pt-5 max-h-[100vh] px-5 whitespace-nowrap'>
-            <p className='font-medium tracking-tight text-3xl text-gray50'>Welcome To {username}'s profile' !</p>
+            <p className='font-medium tracking-tight text-xs mb-2 sm:text-3xl text-gray50'>Welcome To {username}'s profile !</p>
             <div className='profile&Names flex flex-col h-[100%] justify-center'>
                 <div className='flex flex-col gap-3 mb-auto mt-auto'>
-                    <img src={photo} alt='profileImg' className='w-28 h-28 rounded-full object-cover mr-auto ml-auto'/>
+                    <img src={photo} alt='profileImg' className='w-24 h-24 xs:w-28 xs:h-28 rounded-full object-cover mr-auto ml-auto'/>
                     <div className='text-sm text-preWhite ml-auto mr-auto flex flex-col text-center'>
                             <p><span className='underline underline-offset-4 decoration-pink5'>username</span>: @{username}</p>
                             <p><span className='underline underline-offset-4 decoration-pink5'>account created at</span>: {formattedDate}</p>
@@ -115,14 +115,14 @@ const UserProfile = ({token,logged,setEditPost,user}) => {
                     <div className='totalFriends flex items-center text-preWhite gap-2.5'>
                         <p className='mr-auto tracking-tighter'>Friends</p>
                         <div className='flex items-center gap-2 ml-auto'>
-                            <p className='ml-auto'>{searchedUser.friends.length}</p> 
+                            <p className='ml-auto'>{searchedUser?.friends?.length}</p> 
                             <i className="bi bi-people-fill text-lg"></i>
                         </div>
                     </div>
                     <div className='totalPosts flex items-center text-preWhite gap-2.5'>
                         <p className='mr-auto'>Posts</p>
                         <div className='flex items-center gap-2 ml-auto'>
-                            <p className='ml-auto'>{searchedUserPosts.length}</p> 
+                            <p className='ml-auto'>{searchedUserPosts?.length}</p> 
                             <i className="bi bi-sticky-fill text-lg"></i>
                         </div>
                     </div>

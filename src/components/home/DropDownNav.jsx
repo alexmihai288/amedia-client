@@ -5,7 +5,7 @@ const DropDownNav = ({id,username,email,photo}) => {
   const navigate = useNavigate()
 
   return (
-    <div className='bg-white rounded-md flex flex-col p-2'>
+    <div className='bg-white rounded-md flex flex-col p-2 overflow-scroll'>
         <div className='flex items-center gap-3'>
           <img className='w-8 h-8 rounded-full' alt='userPhoto' src={photo}/>
           <p className='text-sm'>{username}</p>

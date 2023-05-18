@@ -3,7 +3,7 @@ import Post from '../home/Post'
 import moment from 'moment'
 
 const Profile = ({user,posts,token,logged,setEditPost,userLogged}) => {
-    const {username,firstName,lastName,email,password,photo,createdAt,userEditButton} = user
+    const {username,photo,createdAt,friends} = user
      // Use moment.js to parse the createdAt value and convert it to UTC
      const createdAtDate = moment.utc(createdAt).toDate()
      // Format the date as YYYY-MM-DD
@@ -27,7 +27,7 @@ const Profile = ({user,posts,token,logged,setEditPost,userLogged}) => {
                     <div className='totalFriends flex items-center text-preWhite gap-2.5'>
                         <p className='mr-auto tracking-tighter'>Friends</p>
                         <div className='flex items-center gap-2 ml-auto'>
-                            <p className='ml-auto'>14</p> 
+                            <p className='ml-auto'>{friends.length}</p> 
                             <i className="bi bi-people-fill text-lg"></i>
                         </div>
                     </div>
