@@ -8,7 +8,7 @@ const LeftSide = ({setCreatePostWindow,logged,userPhoto}) => {
       <div className='options flex flex-col gap-5 relative'>
           {logged &&
             <div className='friends flex items-center gap-3'>
-                <p className="text-textGray sm:text-gray50">Friends</p>
+                <Link to={'/profile/friends'} className="text-textGray sm:text-gray50">Friends</Link>
                 <i className="bi bi-people-fill text-pink5 text-lg"></i>
             </div>
             

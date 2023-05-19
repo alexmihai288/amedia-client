@@ -9,6 +9,7 @@ import CreatePost from './components/home/CreatePost';
 import SinglePost from './components/home/SinglePost';
 import Profile from './components/profile/Profile';
 import UserProfile from './components/profile/UserProfile';
+import Friends from './components/profile/Friends';
 
 function App() {
   
@@ -67,6 +68,7 @@ function App() {
     getAllPosts();
   }, []);
 
+  console.log(user)
   
   return (
     <Router>
@@ -78,6 +80,7 @@ function App() {
         <Route path='/posts/:id' element={<SinglePost token={token} user={user} EditPost={EditPost}/>} />
         <Route path='/profile' element={<Profile user={user} posts={posts} token={token} logged={logged} setEditPost={setEditPost} userLogged={user}/>} />
         <Route path='/profile/:id' element={<UserProfile token={token} logged={logged} setEditPost={setEditPost} user={user}/>}/>
+        <Route path='/profile/friends' element={<Friends user={user}/>}/>
       </Routes>
     </Router>
   );
